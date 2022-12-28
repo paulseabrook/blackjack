@@ -17,6 +17,7 @@
 - Click a button and my hand is dealt.
 - Once dealt, clearly see my cards and the dealer's one face-up card.
 - Choose to "hit" or "stand" based on my cards.
+- Once I stand, deal cards to the dealer.
 - Be informed if I have won the hand or not.
 - Be informed of how much money is left in my bank.
 - Be able to bet again and be dealt cards again.
@@ -71,7 +72,7 @@
 
 `// Dealer functionality - to be called once the stand button is clicked. Dealer's facedown card will show. Cards will be "given" to the dealer until they get between 17 and 20, get 21 and win, or "bust" (get over 21). Note, if the dealer gets between 17 and 21, the functionality MUST stop`
 
-`// upon completion of dealer's functionality, functionality to display winner of hand, and then brought back to second phase with updated bank amounts. Continue this until dealer or player is at 0 `
+`// upon completion of dealer's functionality, functionality to display winner of hand, and then brought back to second phase with updated bank amounts.  Bank amounts will be updated based on who won the temporary pot. (if they win a hand, give them back double. If they win a hand with black jack, give them back what they bet plus 150%) Continue this until dealer or player's bank amount is at 0 `
 
 `// upon player or dealer's bank amount getting to 0, show fourth phase with "Winner" or "loser" `
 
