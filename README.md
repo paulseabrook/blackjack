@@ -108,3 +108,6 @@
 ## v3 User Stories
 
 - Add the ability to play with 2-4 people.
+- Add audio telling you how much your hand has.
+- Implement the ability to split hands.
+- Implement the concept of "insurance"
