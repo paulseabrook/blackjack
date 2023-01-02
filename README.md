@@ -14,8 +14,8 @@
 - See how much money I am starting with in my bank.
 - Click a button and bet in whole dollar amounts.
 - Be stopped if I have not bet before my hand is dealt.
-- Click a button and my hand is dealt.
-- Once dealt, clearly see my cards and the dealer's one face-up card.
+- Click a button and my hand and the dealer's hand is dealt.
+- Once dealt, be able to clearly see my cards and the dealer's one face-up card and face-down card.
 - Choose to "hit" or "stand" based on my cards.
 - Once I stand, deal cards to the dealer.
 - Be informed if I have won the hand or not.
@@ -48,13 +48,13 @@
 
 `// create new "shuffled" array with array of objects for cards randomized `
 
-`// variable to store dealer bank amount (may be located in play function so that it can be reset) `
+`// variable to store dealer bank amount (may be located in render function so that it can be reset) `
 
-`// once hand is dealt, temporary variable to store how close dealer is to 21 `
+`// once hand is dealt, temporary variable to store how close dealer is to 21  (may be located in render function so that it can be reset) `
 
-`// variable to store player bank amount (may be located in play function so that it can be reset) `
+`// variable to store player bank amount (may be located in render function so that it can be reset) `
 
-`// once hand is dealt, temporary variable to store how close player is to 21 `
+`// once hand is dealt, temporary variable to store how close player is to 21 (may be located in render function so that it can be reset) `
 
 `// variable to store temporary "pot" amount (this may be local in scope within a function)`
 
@@ -62,21 +62,23 @@
 
 ### Gameplay functionality
 
-`// initialize function to start the game play and display the banks, the bet button, and the deal button.  Will be added to play button as event listener `
+`// initialize function called immediately to display phase one (first screen)`
 
-`// Upon the bet button being clicked, if the bet amount is not empty, store the bet amount within the temporary pot `
+`// render function to start the game play and display the banks, the bet button, the amount input form, and the deal button.  Will be added to play button as event listener `
 
-`// Upon the deal button being clicked, display the third screen, show the hit and stand buttons, and give the user two cards shown and the dealer with only one card shown`
+`// Upon the bet button being clicked, if the bet amount within the input form is not empty, store the bet amount within the temporary pot `
+
+`// Upon the deal button being clicked, display the third screen, show the hit and stand buttons, and give the user two cards shown and the dealer with only one card shown and another facedown`
 
 `// Player functionality - upon clicking the hit button, the user will be given a random "card". They can continue to click hit until they either bust (get over 21), get 21, or click the stand button `
 
-`// Dealer functionality - to be called once the stand button is clicked. Dealer's facedown card will show. Cards will be "given" to the dealer until they get between 17 and 20, get 21 and win, or "bust" (get over 21). Note, if the dealer gets between 17 and 21, the functionality MUST stop`
+`// Dealer functionality - to be called once the stand button is clicked. Dealer's facedown card will show. Cards will be "given" to the dealer until they get between 17 and 20, get 21 and win, or "bust" (get over 21). Note, if the dealer gets between 17 and 21, the functionality MUST stop (may have to incoporate some setTimeouts for giving card to dealer)`
 
-`// upon completion of dealer's functionality, functionality to display winner of hand, and then brought back to second phase with updated bank amounts.  Bank amounts will be updated based on who won the temporary pot. (if they win a hand, give them back double. If they win a hand with black jack, give them back what they bet plus 150%) Continue this until dealer or player's bank amount is at 0 `
+`// upon completion of Dealer's functionality, the page will the display winner of that hand, and then the user will be brought back to the second phase with updated bank amounts.  Bank amounts will be updated based on who won the temporary pot. (if they win a hand, give them back double. If they win a hand with black jack, give them back what they bet plus 150%) Continue this until dealer or player's bank amount is at 0 `
 
-`// upon player or dealer's bank amount getting to 0, show fourth phase with "Winner" or "loser" `
+`// upon player or dealer's bank amount getting to 0, show fourth phase with "Winner" or "Loser" `
 
-`// play again button to start the game over `
+`// play again button to start the game over. (may be the same function as render)`
 
 ### Event Listeners
 
@@ -90,7 +92,7 @@
 
 `// event listener for stand button to stop dealing to player, once this button is clicked, then run the dealer functionality`
 
-`// event listener for play again button, will be similar if not the same function as initialize `
+`// event listener for play again button, will be similar if not the same function as render`
 
 ---
 
@@ -109,5 +111,7 @@
 
 - Add the ability to play with 2-4 people.
 - Add audio telling you how much your hand has.
+- Implement the ability to bet in 25 cent increments.
 - Implement the ability to split hands.
-- Implement the concept of "insurance"
+- Implement the concept of "insurance".
+- All time statistics vs. computer
