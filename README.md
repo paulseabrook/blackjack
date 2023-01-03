@@ -101,10 +101,10 @@
 
 ### As a user, I want to:
 
-- see better UX/UI design. (setTimeouts, css transitions, css transforms).
+- See better UX/UI design. (setTimeouts, css transitions, css transforms).
 - Have the ability to pick my theme.
 - Have the ability to choose how much money myself and the dealer start with.
-- Have buttons(chips design) for quick selection of an amount to bet.
+- Use buttons(chips design) for quick selection of an amount to bet.
 
 ---
 
