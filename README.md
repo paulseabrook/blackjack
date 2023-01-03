@@ -1,4 +1,4 @@
-# Project 1 - Blackjack
+# Project 1 Blackjack - Planning Documents
 
 ## Wireframe
 
@@ -50,11 +50,11 @@
 
 - `// variable to store dealer bank amount (may be located in render function so that it can be reset) `
 
-- `// once hand is dealt, temporary variable to store how close dealer is to 21  (may be located in render function so that it can be reset) `
+- `// once hand is dealt, temporary variable to store how close dealer is to 21 (card amount) (may be located in render function so that it can be reset) `
 
 - `// variable to store player bank amount (may be located in render function so that it can be reset) `
 
-- `// once hand is dealt, temporary variable to store how close player is to 21 (may be located in render function so that it can be reset) `
+- `// once hand is dealt, temporary variable to store how close player is to 21 (card amount) (may be located in render function so that it can be reset) `
 
 - `// variable to store temporary "pot" amount (this may be local in scope within a function)`
 
@@ -72,7 +72,7 @@
 
 - `// Player functionality - upon clicking the hit button, the user will be given a random "card". They can continue to click hit until they either bust (get over 21), get 21, or click the stand button `
 
-- `// Dealer functionality - to be called once the stand button is clicked. Dealer's facedown card will show. Cards will be "given" to the dealer until they get between 17 and 20, get 21 and win, or "bust" (get over 21). Note, if the dealer gets between 17 and 21, the functionality MUST stop (may have to incoporate some setTimeouts for giving card to dealer)`
+- `// Dealer functionality - to be called once the stand button is clicked. Dealer's facedown card will show. Cards will be "given" to the dealer until they get between 17 and 20, get 21 and win, or "bust" (get over 21). Note, if the dealer gets between 17 and 21, the functionality MUST stop (may have to incoporate some setTimeouts for giving cards to dealer)`
 
 - `// upon completion of Dealer's functionality, the page will the display winner of that hand, and then the user will be brought back to the second phase with updated bank amounts.  Bank amounts will be updated based on who won the temporary pot. (if they win a hand, give them back double. If they win a hand with black jack, give them back what they bet plus 150%) Continue this until dealer or player's bank amount is at 0 `
 
