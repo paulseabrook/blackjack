@@ -168,7 +168,7 @@ const initialize = () => {
   dealerBank = 20;
   betNum = 0;
 
-  const renderTwo = () => {
+  const render = () => {
     const playerBankDiv = document.createElement('div');
     const dealerBankDiv = document.createElement('div');
     const bet = document.createElement('div');
@@ -228,7 +228,7 @@ const initialize = () => {
     });
   };
 
-  renderTwo();
+  render();
 };
 
 // add hide class
