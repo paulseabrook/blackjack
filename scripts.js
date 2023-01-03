@@ -4,12 +4,20 @@ const phaseHeader = document.querySelectorAll('.phase-header');
 const playButton = document.querySelector('#play');
 const containerOne = document.querySelector('.phase-one-container');
 const containerTwo = document.querySelector('.phase-two-container');
+const containerThree = document.querySelector('.phase-three-container');
 const topTwo = document.querySelector(`#phase-two-top`);
 const midTwo = document.querySelector('#phase-two-mid');
 const bottomTwo = document.querySelector('#phase-two-bottom');
 const betForm = document.querySelector('#bet-form');
+const cardAmounts = document.querySelector('.card-amounts');
 
 // data structures //
+
+let dealerBank;
+let playerBank;
+let betNum;
+let dealerCardNum;
+let playerCardNum;
 
 let cards = [
   {
@@ -154,59 +162,74 @@ let cards = [
   },
 ];
 
-let playerBank = 0;
-let dealerBank = 0;
-let betNum;
-
 // functionality //
 const initialize = () => {
   playerBank = 20;
   dealerBank = 20;
   betNum = 0;
 
-  const playerBankDiv = document.createElement('div');
-  const dealerBankDiv = document.createElement('div');
-  const bet = document.createElement('div');
-  const betAmt = document.createElement('input');
-  const deal = document.createElement('div');
-  const betMsg = document.createElement('p');
+  const renderTwo = () => {
+    const playerBankDiv = document.createElement('div');
+    const dealerBankDiv = document.createElement('div');
+    const bet = document.createElement('div');
+    const betAmt = document.createElement('input');
+    const deal = document.createElement('div');
+    const betMsg = document.createElement('p');
 
-  playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-  dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-  bet.innerHTML = `Bet`;
-  deal.innerHTML = 'Deal';
+    playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+    dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+    bet.innerHTML = `Bet`;
+    deal.innerHTML = 'Deal';
 
-  betAmt.classList.add('bet-amount');
-  bet.classList.add('game-button');
-  deal.classList.add('game-button');
+    betAmt.classList.add('bet-amount');
+    bet.classList.add('game-button');
+    deal.classList.add('game-button');
 
-  midTwo.appendChild(betMsg);
-  topTwo.appendChild(dealerBankDiv);
-  bottomTwo.prepend(playerBankDiv);
-  betForm.append(bet);
-  betForm.append(betAmt);
-  bottomTwo.append(deal);
+    midTwo.appendChild(betMsg);
+    topTwo.appendChild(dealerBankDiv);
+    bottomTwo.prepend(playerBankDiv);
+    betForm.append(bet);
+    betForm.append(betAmt);
+    bottomTwo.append(deal);
 
-  hide(containerOne);
-  removeHide(containerTwo);
+    hide(containerOne);
+    removeHide(containerTwo);
 
-  bet.addEventListener('click', () => {
-    hide(phaseHeader[1]);
-    betNum = Number(document.querySelector('.bet-amount').value);
-    if (!Number.isInteger(betNum) || betNum === 0) {
-      betMsg.innerHTML = 'Please bet a whole number.';
-    } else if (betNum > playerBank) {
-      betMsg.innerHTML = "Woah there! You don't have enough money!";
-    } else {
-      betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
-    }
+    bet.addEventListener('click', () => {
+      hide(phaseHeader[1]);
+      betNum = Number(document.querySelector('.bet-amount').value);
+      if (!Number.isInteger(betNum) || betNum === 0) {
+        betMsg.innerHTML = 'Please bet a whole number.';
+      } else if (betNum > playerBank) {
+        betMsg.innerHTML = "Woah there! You don't have enough money!";
+      } else {
+        betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
+      }
+      console.log(betNum);
+    });
+
     console.log(betNum);
-  });
 
-  deal.addEventListener('click', () => {});
+    deal.addEventListener('click', () => {
+      if (betNum === 0) {
+        hide(phaseHeader[1]);
+        betMsg.innerHTML = 'Please place a bet.';
+        return;
+      }
+
+      hide(containerTwo);
+      removeHide(containerThree);
+      const dealerCardAmount = document.createElement('div');
+      const playerCardAmount = document.createElement('div');
+      dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
+      playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
+      cardAmounts.appendChild(dealerCardAmount);
+      cardAmounts.appendChild(playerCardAmount);
+    });
+  };
+
+  renderTwo();
 };
-
-const dealHand = () => {};
 
 // add hide class
 const hide = (element) => {
