@@ -118,3 +118,11 @@
 - Have the ability to split hands.
 - See the concept of "insurance" implemented.
 - See all time statistics vs. the computer.
+
+---
+
+---
+
+### Changes Along The Way
+
+- // Had to add variables for accessing different divs in the different phases (e.g. phase-one-container

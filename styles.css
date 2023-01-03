@@ -3,7 +3,7 @@
 :root {
   --main-green: rgb(1, 107, 1);
   --main-white: rgb(209, 240, 199);
-  --phase-one-green: rgba(12, 84, 12, 0.509);
+  --main-red: rgb(150, 54, 54);
 }
 
 * {
@@ -13,14 +13,90 @@
 }
 
 body {
-  background-color: var(--main-green);
+  background: var(--main-green);
 }
 
 .phase-one-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   min-height: 100vh;
   width: 100%;
+}
+
+.phase-two-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-around;
+  min-height: 100vh;
+  width: 100%;
+}
+
+#phase-two-mid {
+  align-self: center;
+}
+
+#phase-two-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#phase-header {
+  font-weight: bolder;
+  font-size: 50px;
+}
+
+#play {
+  outline: var(--main-red) solid;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#play:hover {
+  background-color: rgba(1, 1, 1, 0.312);
+  cursor: pointer;
+}
+
+#play:active {
+  outline: solid red;
+  background-color: rgba(1, 1, 1, 0.785);
+}
+
+.hide {
+  display: none;
+}
+
+.game-button {
+  outline: var(--main-red) solid;
+  margin-left: 15px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.game-button:hover {
+  background-color: rgba(1, 1, 1, 0.312);
+  cursor: pointer;
+}
+
+.game-button:active {
+  outline: solid red;
+  background-color: rgba(1, 1, 1, 0.785);
+}
+
+#bet-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.bet-amount {
+  border-radius: 5px;
+  margin-left: 20px;
+  width: 10vh;
+  color: black;
 }

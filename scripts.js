@@ -1,4 +1,13 @@
+// variables for accessing DOM //
+
 const playButton = document.querySelector('#play');
+const containerOne = document.querySelector('.phase-one-container');
+const containerTwo = document.querySelector('.phase-two-container');
+const topTwo = document.querySelector(`#phase-two-top`);
+const bottomTwo = document.querySelector('#phase-two-bottom');
+const betForm = document.querySelector('#bet-form');
+
+// data structures //
 
 let cards = [
   {
@@ -143,10 +152,58 @@ let cards = [
   },
 ];
 
+let playerBank = 0;
+let dealerBank = 0;
+
+// functionality //
 const initialize = () => {
-  console.log('Here we go');
+  playerBank = 20;
+  dealerBank = 20;
+
+  const playerBankDiv = document.createElement('div');
+  const dealerBankDiv = document.createElement('div');
+  const bet = document.createElement('div');
+  const betAmt = document.createElement('input');
+  const deal = document.createElement('div');
+
+  playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+  dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+  bet.innerHTML = `Bet`;
+  deal.innerHTML = 'Deal';
+
+  betAmt.classList.add('bet-amount');
+  bet.classList.add('game-button');
+  deal.classList.add('game-button');
+
+  topTwo.appendChild(dealerBankDiv);
+  bottomTwo.prepend(playerBankDiv);
+  betForm.append(bet);
+  betForm.append(betAmt);
+  bottomTwo.append(deal);
+
+  hide(containerOne);
+  removeHide(containerTwo);
+
+  bet.addEventListener('click', (betAmt) => {
+    let betNum = document.querySelector('.bet-amount').value;
+    console.log(betNum);
+  });
 };
 
+const betFunc = () => {
+  console.log();
+};
+const dealHand = () => {};
+
+// add hide class
+const hide = (div) => {
+  div.classList.add('hide');
+};
+
+// remove hide class
+const removeHide = (div) => {
+  div.classList.remove('hide');
+};
 playButton.addEventListener('click', initialize);
 
 // if player card amount !> 21, cards[i].amt = 11, else, cards[i] = 1
