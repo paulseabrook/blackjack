@@ -99,18 +99,22 @@
 
 ## v2 User Stories
 
-- Better UX/UI design. (setTimeouts, css transitions, css transforms)
-- Add the ability to pick your theme.
-- Add the ability to choose how much money you and the dealer start with.
-- Add buttons(chips design) for quick selection of an amount to bet.
+### As a user, I want to:
+
+- see better UX/UI design. (setTimeouts, css transitions, css transforms).
+- Have the ability to pick my theme.
+- Have the ability to choose how much money myself and the dealer start with.
+- Have buttons(chips design) for quick selection of an amount to bet.
 
 ---
 
 ## v3 User Stories
 
-- Add the ability to play with 2-4 people.
-- Add audio telling you how much your hand has.
-- Implement the ability to bet in 25 cent increments.
-- Implement the ability to split hands.
-- Implement the concept of "insurance".
-- All time statistics vs. computer
+### As a user, I want to:
+
+- Have the ability to play with 2-4 people.
+- Have audio telling me how much my hand has.
+- Have the ability to bet in 25 cent increments.
+- Have the ability to split hands.
+- See the concept of "insurance" implemented.
+- See all time statistics vs. the computer.
