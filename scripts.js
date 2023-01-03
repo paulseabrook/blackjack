@@ -185,8 +185,16 @@ const initialize = () => {
   removeHide(containerTwo);
 
   bet.addEventListener('click', (betAmt) => {
-    let betNum = document.querySelector('.bet-amount').value;
+    let betNum = Number(document.querySelector('.bet-amount').value);
     console.log(betNum);
+
+    if (!Number.isInteger(betNum) || betNum === 0) {
+      console.log('Please bet a whole number.');
+    } else if (betNum > playerBank) {
+      console.log("Woah there! You don't have enough money!");
+    } else {
+      console.log('Well done!');
+    }
   });
 };
 
