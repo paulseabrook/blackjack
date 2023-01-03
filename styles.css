@@ -106,4 +106,5 @@ body {
   margin-left: 20px;
   width: 10vh;
   color: black;
+  background-color: var(--main-white);
 }

@@ -1,9 +1,11 @@
 // variables for accessing DOM //
 
+const phaseHeader = document.querySelectorAll('.phase-header');
 const playButton = document.querySelector('#play');
 const containerOne = document.querySelector('.phase-one-container');
 const containerTwo = document.querySelector('.phase-two-container');
 const topTwo = document.querySelector(`#phase-two-top`);
+const midTwo = document.querySelector('#phase-two-mid');
 const bottomTwo = document.querySelector('#phase-two-bottom');
 const betForm = document.querySelector('#bet-form');
 
@@ -154,17 +156,20 @@ let cards = [
 
 let playerBank = 0;
 let dealerBank = 0;
+let betNum;
 
 // functionality //
 const initialize = () => {
   playerBank = 20;
   dealerBank = 20;
+  betNum = 0;
 
   const playerBankDiv = document.createElement('div');
   const dealerBankDiv = document.createElement('div');
   const bet = document.createElement('div');
   const betAmt = document.createElement('input');
   const deal = document.createElement('div');
+  const betMsg = document.createElement('p');
 
   playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
   dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
@@ -175,6 +180,7 @@ const initialize = () => {
   bet.classList.add('game-button');
   deal.classList.add('game-button');
 
+  midTwo.appendChild(betMsg);
   topTwo.appendChild(dealerBankDiv);
   bottomTwo.prepend(playerBankDiv);
   betForm.append(bet);
@@ -184,34 +190,34 @@ const initialize = () => {
   hide(containerOne);
   removeHide(containerTwo);
 
-  bet.addEventListener('click', (betAmt) => {
-    let betNum = Number(document.querySelector('.bet-amount').value);
-    console.log(betNum);
-
+  bet.addEventListener('click', () => {
+    hide(phaseHeader[1]);
+    betNum = Number(document.querySelector('.bet-amount').value);
     if (!Number.isInteger(betNum) || betNum === 0) {
-      console.log('Please bet a whole number.');
+      betMsg.innerHTML = 'Please bet a whole number.';
     } else if (betNum > playerBank) {
-      console.log("Woah there! You don't have enough money!");
+      betMsg.innerHTML = "Woah there! You don't have enough money!";
     } else {
-      console.log('Well done!');
+      betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
     }
+    console.log(betNum);
   });
+
+  deal.addEventListener('click', () => {});
 };
 
-const betFunc = () => {
-  console.log();
-};
 const dealHand = () => {};
 
 // add hide class
-const hide = (div) => {
-  div.classList.add('hide');
+const hide = (element) => {
+  element.classList.add('hide');
 };
 
 // remove hide class
-const removeHide = (div) => {
-  div.classList.remove('hide');
+const removeHide = (element) => {
+  element.classList.remove('hide');
 };
+
 playButton.addEventListener('click', initialize);
 
 // if player card amount !> 21, cards[i].amt = 11, else, cards[i] = 1
