@@ -13,7 +13,6 @@ const cardAmounts = document.querySelector('.card-amounts');
 const dealerCards = document.querySelector('.dealer-cards');
 const playerCards = document.querySelector('.player-cards');
 const hitStand = document.querySelector('.hit-stand');
-const hitButton = document.querySelector;
 
 // data structures //
 
@@ -22,6 +21,8 @@ let playerBank;
 let betNum;
 let dealerCardNum;
 let playerCardNum;
+let newCard;
+let newCardDiv;
 
 let cards = [
   {
@@ -340,15 +341,12 @@ let cards = [
   },
 ];
 
-console.log(cards);
-
 // functionality //
 const initialize = () => {
   // initialize for play again
 
   playerBank = 20;
   dealerBank = 20;
-  betNum = 0;
 
   // https://stackoverflow.com/questions/49555273/how-to-shuffle-an-array-of-objects-in-javascript
   // Fisher-Yates Algorithm
@@ -379,14 +377,18 @@ const initialize = () => {
   const playerCardOne = document.createElement('div');
   const playerCardTwo = document.createElement('div');
 
-  playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-  dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
   bet.innerHTML = `Bet`;
   deal.innerHTML = 'Deal';
 
+  betAmt.setAttribute('type', 'number');
   betAmt.classList.add('bet-amount');
+
   bet.classList.add('game-button');
   deal.classList.add('game-button');
+  dealerCardOne.classList.add('cards');
+  playerCardOne.classList.add('cards');
+  dealerCardTwo.classList.add('cards');
+  playerCardTwo.classList.add('cards');
 
   midTwo.appendChild(betMsg);
   topTwo.appendChild(dealerBankDiv);
@@ -395,16 +397,51 @@ const initialize = () => {
   betForm.append(betAmt);
   bottomTwo.append(deal);
 
-  hide(containerOne);
-  removeHide(containerTwo);
+  cardAmounts.appendChild(dealerCardAmount);
+  cardAmounts.appendChild(playerCardAmount);
+
+  dealerCards.appendChild(dealerCardOne);
+  dealerCards.appendChild(dealerCardTwo);
+  playerCards.appendChild(playerCardOne);
+  playerCards.appendChild(playerCardTwo);
+  hitStand.appendChild(hit);
+  hitStand.appendChild(stand);
+
+  dealerCards.appendChild(dealerCardOne);
+  dealerCards.appendChild(dealerCardTwo);
+  playerCards.appendChild(playerCardOne);
+  playerCards.appendChild(playerCardTwo);
+
+  dealerCardOne.classList.add('cards');
+  playerCardOne.classList.add('cards');
+  dealerCardTwo.classList.add('cards');
+  playerCardTwo.classList.add('cards');
+
+  hit.classList.add('game-button');
+  stand.classList.add('game-button');
 
   const render = () => {
-    // render for going back and forth between phase two and phase three
+    removeAllChildNodes(dealerCards);
+    removeAllChildNodes(playerCards);
+
+    dealerCards.appendChild(dealerCardOne);
+    dealerCards.appendChild(dealerCardTwo);
+    playerCards.appendChild(playerCardOne);
+    playerCards.appendChild(playerCardTwo);
+
+    playerCardNum = 0;
+    dealerCardNum = 0;
+
     playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+    dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
+    hide(containerOne);
     removeHide(containerTwo);
+
     bet.addEventListener('click', () => {
       hide(phaseHeader[1]);
-      betNum = Number(document.querySelector('.bet-amount').value);
+      betNum = parseFloat(betAmt.value);
+      console.log(betNum, betAmt.value);
       if (!Number.isInteger(betNum) || betNum === 0) {
         betMsg.innerHTML = 'Please bet a whole number.';
       } else if (betNum > playerBank) {
@@ -412,13 +449,12 @@ const initialize = () => {
       } else {
         betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
       }
-      console.log(betNum);
+      betAmt.reset();
     });
 
     console.log(betNum);
-
     deal.addEventListener('click', () => {
-      if (betNum === 0) {
+      if (betNum === 0 || betNum === NaN || betNum === undefined) {
         hide(phaseHeader[1]);
         betMsg.innerHTML = 'Please place a bet.';
         return;
@@ -429,14 +465,6 @@ const initialize = () => {
 
       hide(containerTwo);
       removeHide(containerThree);
-      const dealerCardAmount = document.createElement('div');
-      const playerCardAmount = document.createElement('div');
-      const dealerCardOne = document.createElement('div');
-      const dealerCardTwo = document.createElement('div');
-      const hit = document.createElement('div');
-      const stand = document.createElement('div');
-      const playerCardOne = document.createElement('div');
-      const playerCardTwo = document.createElement('div');
 
       let cardOne = cards.shift();
       let cardTwo = cards.shift();
@@ -445,67 +473,61 @@ const initialize = () => {
 
       playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`;
       playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`;
-      dealerCardNum = cardOne.amt + cardTwo.amt;
+      playerCardNum = cardOne.amt + cardTwo.amt;
 
       dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`;
       dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
-      playerCardNum = cardThree.amt + cardFour.amt;
+      dealerCardNum = cardThree.amt + cardFour.amt;
 
-      dealerCardOne.classList.add('cards');
-      playerCardOne.classList.add('cards');
-      dealerCardTwo.classList.add('cards');
-      playerCardTwo.classList.add('cards');
-      hit.classList.add('game-button');
-      stand.classList.add('game-button');
+      console.log(playerCardNum, dealerCardNum);
 
       hit.innerHTML = 'Hit';
       stand.innerHTML = 'Stand';
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
 
-      cardAmounts.appendChild(dealerCardAmount);
-      cardAmounts.appendChild(playerCardAmount);
-      dealerCards.appendChild(dealerCardOne);
-      dealerCards.appendChild(dealerCardTwo);
-      playerCards.appendChild(playerCardOne);
-      playerCards.appendChild(playerCardTwo);
-      hitStand.appendChild(hit);
-      hitStand.appendChild(stand);
-
       hit.addEventListener('click', () => {
-        const newCardDiv = document.createElement('div');
-        const newCard = cards.shift();
+        newCard = {};
+        console.log(playerCardNum, dealerCardNum);
+        newCardDiv = document.createElement('div');
+        newCard = cards.shift();
         newCardDiv.classList.add('cards');
+        newCardDiv.classList.add('newCards');
         newCardDiv.innerHTML = `${newCard.name} ${newCard.emj}`;
         playerCardNum += newCard.amt;
         playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
         playerCards.appendChild(newCardDiv);
         if (playerCardNum > 21) {
           hide(containerThree);
+
           const bust = document.createElement('div');
-          // may want to clean up bust styling
+          // may want to clean up bust stylings
           bust.classList.add('phase-header');
           bust.innerHTML = 'You busted.';
           document.body.appendChild(bust);
+
           playerBank -= betNum;
-          if (playerBank === 0) {
-            // phase four code
+
+          if (playerBank <= 0) {
+            // phase four functionality
             console.log('phaseFour');
           } else {
-            setTimeout(() => {
-              render(playerBank);
-            }, 3000);
+            render();
           }
         }
       });
-
-      stand.addEventListener;
     });
   };
-
   render();
 };
 
+// https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
+// remove all children
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
 // add hide class
 const hide = (element) => {
   element.classList.add('hide');
