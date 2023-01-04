@@ -84,7 +84,15 @@ body {
   padding: 20px;
 }
 
+.player-cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
 .cards {
+  font-size: 17px;
   padding: 20px;
   height: 20vh;
   width: 15vh;
