@@ -448,6 +448,14 @@ const initialize = () => {
       hide(containerTwo);
       removeHide(containerThree);
 
+      while (dealerCards.firstChild) {
+        dealerCards.removeChild(dealerCards.lastChild);
+      }
+
+      while (playerCards.firstChild) {
+        playerCards.removeChild(playerCards.lastChild);
+      }
+
       dealerCards.appendChild(dealerCardOne);
       dealerCards.appendChild(dealerCardTwo);
       playerCards.appendChild(playerCardOne);
@@ -484,8 +492,9 @@ const initialize = () => {
           newCard.amt)}`;
         console.log(playerCardNum);
         if (playerCardNum > 21) {
+          playerBank -= betNum;
           alert('You Busted');
-          // code to go back to phase 2
+          render();
         }
       });
 
@@ -494,22 +503,7 @@ const initialize = () => {
         dealerCardOne.classList.remove('hidden');
         dealerCardNum = cardThree.amt + cardFour.amt;
         dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
-        if (dealerCardNum === playerCardNum) {
-          console.log('This is a push');
-          // code to reset
-        } else if (dealerCardNum === 21 && playerCardNum != 21) {
-          console.log('The dealer has won, you lose');
-          // code to reset
-        } else if (dealerCardNum > 21) {
-          console.log('Dealer Loses');
-          // code to reset
-        } else if (dealerCardNum > 16 && dealerCardNum < 21) {
-          if (playerCardNum > dealerCardNum) {
-            console.log('you won!');
-          } else {
-            console.log('You lost!');
-          }
-        }
+
         while (dealerCardNum < 17) {
           let newDealCard = cards.shift();
           //console.log(newDealCard);
@@ -524,17 +518,27 @@ const initialize = () => {
         dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         if (dealerCardNum === playerCardNum) {
           console.log('This is a push');
+          console.log(playerBank);
+          console.log(dealerBank);
           // code to reset
         } else if (dealerCardNum === 21 && playerCardNum != 21) {
           console.log('The dealer has won, you lose');
+          console.log(playerBank);
+          console.log(dealerBank);
           // code to reset
         } else if (dealerCardNum > 21) {
+          console.log(playerBank);
+          console.log(dealerBank);
           console.log('Dealer Loses');
           // code to reset
         } else if (dealerCardNum > 16 && dealerCardNum < 21) {
           if (playerCardNum > dealerCardNum) {
+            console.log(playerBank);
+            console.log(dealerBank);
             console.log('you won!');
           } else {
+            console.log(playerBank);
+            console.log(dealerBank);
             console.log('You lost!');
           }
         }
@@ -551,11 +555,11 @@ const initialize = () => {
 
 // https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
 // remove all children
-function removeAllChildNodes(parent) {
+const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
-}
+};
 // add hide class
 const hide = (element) => {
   element.classList.add('hide');
