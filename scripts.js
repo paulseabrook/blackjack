@@ -11,6 +11,8 @@ const bottomTwo = document.querySelector('#phase-two-bottom');
 const betForm = document.querySelector('#bet-form');
 const cardAmounts = document.querySelector('.card-amounts');
 const dealerCards = document.querySelector('.dealer-cards');
+const hitStand = document.querySelector('.hit-stand');
+
 // data structures //
 
 let dealerBank;
@@ -368,6 +370,8 @@ const initialize = () => {
       const playerCardAmount = document.createElement('div');
       const dealerCardOne = document.createElement('div');
       const dealerCardTwo = document.createElement('div');
+      const hit = document.createElement('div');
+      const stand = document.createElement('div');
       const playerCardOne = document.createElement('div');
       const playerCardTwo = document.createElement('div');
 
@@ -380,6 +384,15 @@ const initialize = () => {
       dealerCardTwo.innerHTML = `${cardTwo.name}`;
       dealerCardNum = cardOne.amt + cardTwo.amt;
 
+      dealerCardOne.classList.add('cards');
+      playerCardOne.classList.add('cards');
+      dealerCardTwo.classList.add('cards');
+      playerCardOne.classList.add('cards');
+      hit.classList.add('game-button');
+      stand.classList.add('game-button');
+
+      hit.innerHTML = 'Hit';
+      stand.innerHTML = 'Stand';
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
 
@@ -387,6 +400,8 @@ const initialize = () => {
       cardAmounts.appendChild(playerCardAmount);
       dealerCards.appendChild(dealerCardOne);
       dealerCards.appendChild(dealerCardTwo);
+      hitStand.appendChild(hit);
+      hitStand.appendChild(stand);
     });
   };
 

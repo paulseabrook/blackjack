@@ -68,6 +68,38 @@ body {
   width: 100%;
 }
 
+.phase-three-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.dealer-cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cards {
+  padding: 20px;
+  height: 20vh;
+  width: 15vh;
+  text-align: center;
+  outline: solid var(--main-red);
+  color: var(--main-green);
+  background: rgba(255, 250, 250, 0.843);
+}
+
+.hit-stand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #phase-header {
   font-weight: bolder;
   font-size: 50px;
