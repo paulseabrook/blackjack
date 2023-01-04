@@ -165,3 +165,14 @@ body {
   color: black;
   background-color: var(--main-white);
 }
+
+.hidden {
+  opacity: 0%;
+  font-size: 17px;
+  padding: 20px;
+  height: 20vh;
+  width: 15vh;
+  text-align: center;
+  outline: solid var(--main-red);
+  color: var(--main-green);
+}

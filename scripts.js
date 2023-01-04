@@ -21,8 +21,9 @@ let playerBank;
 let betNum;
 let dealerCardNum;
 let playerCardNum;
-let newCard;
-let newCardDiv;
+let newPlayerCard;
+let newDealerCard;
+let newCardsArr = [];
 
 let cards = [
   {
@@ -100,7 +101,7 @@ let cards = [
   {
     abr: 'ah',
     name: 'ace of hearts',
-    amt: 0,
+    amt: 11,
     emj: '❤️',
   },
 
@@ -179,7 +180,7 @@ let cards = [
   {
     abr: 'as',
     name: 'ace of spades',
-    amt: 0,
+    amt: 11,
     emj: '♠️',
   },
 
@@ -258,7 +259,7 @@ let cards = [
   {
     abr: 'ac',
     name: 'ace of clubs',
-    amt: 0,
+    amt: 11,
     emj: '♣️',
   },
   {
@@ -336,7 +337,7 @@ let cards = [
   {
     abr: 'ad',
     name: 'ace of diamonds',
-    amt: 0,
+    amt: 11,
     emj: '♦',
   },
 ];
@@ -407,27 +408,12 @@ const initialize = () => {
   hitStand.appendChild(hit);
   hitStand.appendChild(stand);
 
-  dealerCards.appendChild(dealerCardOne);
-  dealerCards.appendChild(dealerCardTwo);
-  playerCards.appendChild(playerCardOne);
-  playerCards.appendChild(playerCardTwo);
-
-  dealerCardOne.classList.add('cards');
-  playerCardOne.classList.add('cards');
-  dealerCardTwo.classList.add('cards');
-  playerCardTwo.classList.add('cards');
-
   hit.classList.add('game-button');
   stand.classList.add('game-button');
 
   const render = () => {
     removeAllChildNodes(dealerCards);
     removeAllChildNodes(playerCards);
-
-    dealerCards.appendChild(dealerCardOne);
-    dealerCards.appendChild(dealerCardTwo);
-    playerCards.appendChild(playerCardOne);
-    playerCards.appendChild(playerCardTwo);
 
     playerCardNum = 0;
     dealerCardNum = 0;
@@ -439,9 +425,10 @@ const initialize = () => {
     removeHide(containerTwo);
 
     bet.addEventListener('click', () => {
+      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
       hide(phaseHeader[1]);
       betNum = parseFloat(betAmt.value);
-      console.log(betNum, betAmt.value);
       if (!Number.isInteger(betNum) || betNum === 0) {
         betMsg.innerHTML = 'Please bet a whole number.';
       } else if (betNum > playerBank) {
@@ -449,10 +436,8 @@ const initialize = () => {
       } else {
         betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
       }
-      betAmt.reset();
     });
 
-    console.log(betNum);
     deal.addEventListener('click', () => {
       if (betNum === 0 || betNum === NaN || betNum === undefined) {
         hide(phaseHeader[1]);
@@ -460,11 +445,15 @@ const initialize = () => {
         return;
       }
 
-      playerCardNum = 0;
-      dealerCardNum = 0;
-
       hide(containerTwo);
       removeHide(containerThree);
+
+      dealerCards.appendChild(dealerCardOne);
+      dealerCards.appendChild(dealerCardTwo);
+      playerCards.appendChild(playerCardOne);
+      playerCards.appendChild(playerCardTwo);
+
+      dealerCardOne.classList.add('hidden');
 
       let cardOne = cards.shift();
       let cardTwo = cards.shift();
@@ -477,43 +466,82 @@ const initialize = () => {
 
       dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`;
       dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
-      dealerCardNum = cardThree.amt + cardFour.amt;
-
-      console.log(playerCardNum, dealerCardNum);
+      dealerCardNum = cardFour.amt;
 
       hit.innerHTML = 'Hit';
       stand.innerHTML = 'Stand';
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
 
+      // hit player functionality
       hit.addEventListener('click', () => {
-        newCard = {};
-        console.log(playerCardNum, dealerCardNum);
-        newCardDiv = document.createElement('div');
-        newCard = cards.shift();
-        newCardDiv.classList.add('cards');
-        newCardDiv.classList.add('newCards');
-        newCardDiv.innerHTML = `${newCard.name} ${newCard.emj}`;
-        playerCardNum += newCard.amt;
-        playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
-        playerCards.appendChild(newCardDiv);
+        let hitCard = document.createElement('div');
+        let newCard = cards.shift();
+        hitCard.classList.add('cards');
+        hitCard.innerHTML = `${newCard.name} ${newCard.emj}`;
+        playerCards.appendChild(hitCard);
+        playerCardAmount.innerHTML = `Player: ${(playerCardNum +=
+          newCard.amt)}`;
+        console.log(playerCardNum);
         if (playerCardNum > 21) {
-          hide(containerThree);
+          alert('You Busted');
+          // code to go back to phase 2
+        }
+      });
 
-          const bust = document.createElement('div');
-          // may want to clean up bust stylings
-          bust.classList.add('phase-header');
-          bust.innerHTML = 'You busted.';
-          document.body.appendChild(bust);
-
-          playerBank -= betNum;
-
-          if (playerBank <= 0) {
-            // phase four functionality
-            console.log('phaseFour');
+      // stand dealer functionality
+      stand.addEventListener('click', () => {
+        dealerCardOne.classList.remove('hidden');
+        dealerCardNum = cardThree.amt + cardFour.amt;
+        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
+        if (dealerCardNum === playerCardNum) {
+          console.log('This is a push');
+          // code to reset
+        } else if (dealerCardNum === 21 && playerCardNum != 21) {
+          console.log('The dealer has won, you lose');
+          // code to reset
+        } else if (dealerCardNum > 21) {
+          console.log('Dealer Loses');
+          // code to reset
+        } else if (dealerCardNum > 16 && dealerCardNum < 21) {
+          if (playerCardNum > dealerCardNum) {
+            console.log('you won!');
           } else {
-            render();
+            console.log('You lost!');
           }
+        }
+        while (dealerCardNum < 17) {
+          let newDealCard = cards.shift();
+          //console.log(newDealCard);
+          //newCardsArr.push(newDealCard);
+          dealerCardNum += newDealCard.amt;
+          let dealCard = document.createElement('div');
+          dealCard.classList.add('cards');
+          dealCard.innerHTML = `${newDealCard.name} ${newDealCard.emj}`;
+          dealerCards.append(dealCard);
+        }
+
+        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
+        if (dealerCardNum === playerCardNum) {
+          console.log('This is a push');
+          // code to reset
+        } else if (dealerCardNum === 21 && playerCardNum != 21) {
+          console.log('The dealer has won, you lose');
+          // code to reset
+        } else if (dealerCardNum > 21) {
+          console.log('Dealer Loses');
+          // code to reset
+        } else if (dealerCardNum > 16 && dealerCardNum < 21) {
+          if (playerCardNum > dealerCardNum) {
+            console.log('you won!');
+          } else {
+            console.log('You lost!');
+          }
+        }
+        if (playerBank === 0) {
+          console.log('Player Wins! Moving to phase 4');
+        } else if (dealerBank === 0) {
+          console.log('Dealer wins! Moving to phase 4');
         }
       });
     });
