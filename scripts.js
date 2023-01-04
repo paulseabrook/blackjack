@@ -10,7 +10,7 @@ const midTwo = document.querySelector('#phase-two-mid');
 const bottomTwo = document.querySelector('#phase-two-bottom');
 const betForm = document.querySelector('#bet-form');
 const cardAmounts = document.querySelector('.card-amounts');
-
+const dealerCards = document.querySelector('.dealer-cards');
 // data structures //
 
 let dealerBank;
@@ -20,11 +20,6 @@ let dealerCardNum;
 let playerCardNum;
 
 let cards = [
-  {
-    abr: '1h',
-    name: 'one of hearts',
-    amt: 1,
-  },
   {
     abr: '2h',
     name: 'two of hearts',
@@ -90,11 +85,7 @@ let cards = [
     name: 'ace of hearts',
     amt: 0,
   },
-  {
-    abr: '1s',
-    name: 'one of spades',
-    amt: 1,
-  },
+
   {
     abr: '2s',
     name: 'two of spades',
@@ -160,15 +151,166 @@ let cards = [
     name: 'ace of spades',
     amt: 0,
   },
+
+  {
+    abr: '2c',
+    name: 'two of clubs',
+    amt: 2,
+  },
+  {
+    abr: '3c',
+    name: 'three of clubs',
+    amt: 3,
+  },
+  {
+    abr: '4c',
+    name: 'four of clubs',
+    amt: 4,
+  },
+  {
+    abr: '5c',
+    name: 'five of clubs',
+    amt: 5,
+  },
+  {
+    abr: '6c',
+    name: 'six of clubs',
+    amt: 6,
+  },
+  {
+    abr: '7c',
+    name: 'seven of clubs',
+    amt: 7,
+  },
+  {
+    abr: '8c',
+    name: 'eight of clubs',
+    amt: 8,
+  },
+  {
+    abr: '9c',
+    name: 'nine of clubs',
+    amt: 9,
+  },
+  {
+    abr: '10c',
+    name: 'ten of clubs',
+    amt: 10,
+  },
+  {
+    abr: 'jc',
+    name: 'jack of clubs',
+    amt: 10,
+  },
+  {
+    abr: 'qc',
+    name: 'queen of clubs',
+    amt: 10,
+  },
+  {
+    abr: 'kc',
+    name: 'king of clubs',
+    amt: 10,
+  },
+  {
+    abr: 'ac',
+    name: 'ace of clubs',
+    amt: 0,
+  },
+  {
+    abr: '2d',
+    name: 'two of diamonds',
+    amt: 2,
+  },
+  {
+    abr: '3d',
+    name: 'three of diamonds',
+    amt: 3,
+  },
+  {
+    abr: '4d',
+    name: 'four of diamonds',
+    amt: 4,
+  },
+  {
+    abr: '5d',
+    name: 'five of diamonds',
+    amt: 5,
+  },
+  {
+    abr: '6d',
+    name: 'six of diamonds',
+    amt: 6,
+  },
+  {
+    abr: '7d',
+    name: 'seven of diamonds',
+    amt: 7,
+  },
+  {
+    abr: '8d',
+    name: 'eight of diamonds',
+    amt: 8,
+  },
+  {
+    abr: '9d',
+    name: 'nine of diamonds',
+    amt: 9,
+  },
+  {
+    abr: '10d',
+    name: 'ten of diamonds',
+    amt: 10,
+  },
+  {
+    abr: 'jd',
+    name: 'jack of diamonds',
+    amt: 10,
+  },
+  {
+    abr: 'qd',
+    name: 'queen of diamonds',
+    amt: 10,
+  },
+  {
+    abr: 'kd',
+    name: 'king of diamonds',
+    amt: 10,
+  },
+  {
+    abr: 'ad',
+    name: 'ace of diamonds',
+    amt: 0,
+  },
 ];
+
+console.log(cards);
 
 // functionality //
 const initialize = () => {
+  // initialize for play again
+
   playerBank = 20;
   dealerBank = 20;
   betNum = 0;
 
+  // https://stackoverflow.com/questions/49555273/how-to-shuffle-an-array-of-objects-in-javascript
+  // Fisher-Yates Algorithm
+
+  function shuffleFisherYates(array) {
+    let i = array.length;
+    while (i--) {
+      const ri = Math.floor(Math.random() * i);
+      [array[i], array[ri]] = [array[ri], array[i]];
+    }
+    return array;
+  }
+
+  shuffleFisherYates(cards);
+  console.log(cards);
+
   const render = () => {
+    // render for going back and forth between phase two and phase three
     const playerBankDiv = document.createElement('div');
     const dealerBankDiv = document.createElement('div');
     const bet = document.createElement('div');
@@ -217,14 +359,34 @@ const initialize = () => {
         return;
       }
 
+      playerCardNum = 0;
+      dealerCardNum = 0;
+
       hide(containerTwo);
       removeHide(containerThree);
       const dealerCardAmount = document.createElement('div');
       const playerCardAmount = document.createElement('div');
+      const dealerCardOne = document.createElement('div');
+      const dealerCardTwo = document.createElement('div');
+      const playerCardOne = document.createElement('div');
+      const playerCardTwo = document.createElement('div');
+
+      let cardOne = cards.shift();
+      let cardTwo = cards.shift();
+      let cardThree = cards.shift();
+      let cardFour = cards.shift();
+      console.log(cards);
+      dealerCardOne.innerHTML = `${cardOne.name}`;
+      dealerCardTwo.innerHTML = `${cardTwo.name}`;
+      dealerCardNum = cardOne.amt + cardTwo.amt;
+
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
+
       cardAmounts.appendChild(dealerCardAmount);
       cardAmounts.appendChild(playerCardAmount);
+      dealerCards.appendChild(dealerCardOne);
+      dealerCards.appendChild(dealerCardTwo);
     });
   };
 
