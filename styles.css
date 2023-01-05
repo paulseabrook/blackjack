@@ -127,7 +127,7 @@ body {
   border-radius: 5px;
 }
 
-.playAgain {
+.play-again {
   outline: var(--main-red) solid;
   padding: 20px;
   border-radius: 5px;

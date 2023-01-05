@@ -24,7 +24,7 @@ let dealerCardNum;
 let playerCardNum;
 let newPlayerCard;
 let newDealerCard;
-let newCardsArr = [];
+let gameCount = 0;
 
 let cards = [
   {
@@ -367,7 +367,6 @@ const initialize = () => {
     hide(betMsg);
     removeHide(phaseHeader[1]);
     hide(containerThree);
-
     hide(containerTwo);
     removeHide(containerFour);
     return;
@@ -391,7 +390,7 @@ const initialize = () => {
 
   playAgain.innerHTML = 'Play Again';
   playAgain.addEventListener('click', () => {
-    initialize();
+    window.location.reload();
   });
 
   bet.innerHTML = `Bet`;
@@ -510,14 +509,15 @@ const initialize = () => {
           `${playerCardNum} is your player card number at the moment`
         );
         if (playerCardNum > 21) {
-          playerCardNum = 0;
           console.log(`${playerCardNum} after busting`);
-
+          playerCardNum = 0;
           playerBank -= betNum;
           dealerBank += betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = 'You Busted';
+          console.log(hitCard);
+          console.log(newCard);
 
           if (playerBank <= 0 || dealerBank <= 0) {
             getWinner();
@@ -540,8 +540,6 @@ const initialize = () => {
 
         while (dealerCardNum < 17) {
           let newDealCard = cards.shift();
-          //console.log(newDealCard);
-          //newCardsArr.push(newDealCard);
           dealerCardNum += newDealCard.amt;
           let dealCard = document.createElement('div');
           dealCard.classList.add('cards');
@@ -551,6 +549,7 @@ const initialize = () => {
 
         if (dealerCardNum === playerCardNum) {
           console.log('This is a push');
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
@@ -568,9 +567,9 @@ const initialize = () => {
             }, 3000);
           }
         } else if (dealerCardNum === 21 && playerCardNum != 21) {
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
-
           dealerBank += betNum;
           playerBank -= betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
@@ -588,12 +587,14 @@ const initialize = () => {
             }, 3000);
           }
         } else if (playerCardNum === 21 && dealerCardNum != 21) {
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
           dealerBank -= betNum * 2;
           playerBank += betNum * 2;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           phaseHeader[1].innerHTML = `You got Blackjack!`;
 
           if (playerBank <= 0 || dealerBank <= 0) {
@@ -608,12 +609,14 @@ const initialize = () => {
           }
         } else if (dealerCardNum > 21) {
           console.log('dealer busted');
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
           dealerBank -= betNum;
           playerBank += betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
           phaseHeader[1].innerHTML = `You won that hand!`;
 
           if (playerBank <= 0 || dealerBank <= 0) {
@@ -628,12 +631,14 @@ const initialize = () => {
           }
         } else if (playerCardNum > dealerCardNum) {
           console.log('dealer loses');
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
           dealerBank -= betNum;
           playerBank += betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
           phaseHeader[1].innerHTML = `You won that hand!`;
 
           if (playerBank <= 0 || dealerBank <= 0) {
@@ -647,6 +652,7 @@ const initialize = () => {
             }, 3000);
           }
         } else if (dealerCardNum > playerCardNum) {
+          dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
           console.log('The dealer has won, you lose');
@@ -654,6 +660,7 @@ const initialize = () => {
           playerBank -= betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
           phaseHeader[1].innerHTML = `The dealer won that hand.`;
 
           if (playerBank <= 0 || dealerBank <= 0) {
