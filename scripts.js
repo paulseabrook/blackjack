@@ -436,6 +436,7 @@ const initialize = () => {
       } else {
         betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
       }
+      removeHide(betMsg);
     });
 
     deal.addEventListener('click', () => {
@@ -492,9 +493,24 @@ const initialize = () => {
           newCard.amt)}`;
         console.log(playerCardNum);
         if (playerCardNum > 21) {
+          playerCardNum = 0;
+          console.log(playerCardNum);
+
           playerBank -= betNum;
-          alert('You Busted');
-          render();
+          dealerBank += betNum;
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = 'You Busted';
+          hide(betMsg);
+          removeHide(phaseHeader[1]);
+          if (playerBank === 0) {
+            console.log('Dealer Wins! Moving to phase 4');
+          } else if (dealerBank === 0) {
+            console.log('Player wins! Moving to phase 4');
+          } else {
+            hide(containerThree);
+            removeHide(containerTwo);
+          }
         }
       });
 
@@ -515,37 +531,79 @@ const initialize = () => {
           dealerCards.append(dealCard);
         }
 
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         if (dealerCardNum === playerCardNum) {
           console.log('This is a push');
-          console.log(playerBank);
-          console.log(dealerBank);
-          // code to reset
+          dealerCardNum = 0;
+          playerCardNum = 0;
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = `You and the Dealer had the same: ${dealerCardNum}. Push.`;
+          hide(betMsg);
+          removeHide(phaseHeader[1]);
+          hide(containerThree);
+          removeHide(containerTwo);
         } else if (dealerCardNum === 21 && playerCardNum != 21) {
+          dealerCardNum = 0;
+          playerCardNum = 0;
           console.log('The dealer has won, you lose');
-          console.log(playerBank);
-          console.log(dealerBank);
-          // code to reset
+          dealerBank += betNum;
+          playerBank -= betNum;
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = `The dealer won that hand`;
+
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 2000);
         } else if (dealerCardNum > 21) {
-          console.log(playerBank);
-          console.log(dealerBank);
-          console.log('Dealer Loses');
-          // code to reset
+          console.log('dealer loses');
+          dealerCardNum = 0;
+          playerCardNum = 0;
+          dealerBank -= betNum;
+          playerBank += betNum;
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = `You won that hand!`;
+          hide(betMsg);
+          removeHide(phaseHeader[1]);
+          hide(containerThree);
+          removeHide(containerTwo);
         } else if (dealerCardNum > 16 && dealerCardNum < 21) {
           if (playerCardNum > dealerCardNum) {
-            console.log(playerBank);
-            console.log(dealerBank);
-            console.log('you won!');
-          } else {
-            console.log(playerBank);
-            console.log(dealerBank);
-            console.log('You lost!');
+            console.log('dealer loses');
+            dealerCardNum = 0;
+            playerCardNum = 0;
+            dealerBank -= betNum;
+            playerBank += betNum;
+            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+            phaseHeader[1].innerHTML = `You won that hand!`;
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          } else if (dealerCardNum > playerCardNum) {
+            dealerCardNum = 0;
+            playerCardNum = 0;
+            console.log('The dealer has won, you lose');
+            dealerBank += betNum;
+            playerBank -= betNum;
+            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+            phaseHeader[1].innerHTML = `The dealer won that hand.`;
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
           }
         }
-        if (playerBank === 0) {
-          console.log('Player Wins! Moving to phase 4');
-        } else if (dealerBank === 0) {
-          console.log('Dealer wins! Moving to phase 4');
+        if (playerBank <= 0) {
+          console.log('Dealer Wins! Moving to phase 4');
+        } else if (dealerBank <= 0) {
+          console.log('Player wins! Moving to phase 4');
         }
       });
     });
