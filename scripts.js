@@ -13,7 +13,6 @@ const cardAmounts = document.querySelector('.card-amounts');
 const dealerCards = document.querySelector('.dealer-cards');
 const playerCards = document.querySelector('.player-cards');
 const hitStand = document.querySelector('.hit-stand');
-const playAgain = document.querySelector('.play-again');
 const containerFour = document.querySelector('.phase-four-container');
 
 // data structures //
@@ -355,33 +354,24 @@ const initialize = () => {
 
   const getWinner = () => {
     if (playerBank <= 0) {
-      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
       phaseHeader[1].innerHTML = "You've run out of money. You lose.";
-      containerFour.appendChild(phaseHeader[1]);
-      containerFour.appendChild(playerBankDiv);
-      containerFour.appendChild(dealerBankDiv);
-      hide(betMsg);
-      removeHide(phaseHeader[1]);
-      hide(containerThree);
-      removeHide(containerFour);
-      return;
     } else if (dealerBank <= 0) {
-      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
       phaseHeader[1].innerHTML = 'You win Blackjack!';
-      containerFour.appendChild(phaseHeader[1]);
-      containerFour.appendChild(playerBankDiv);
-      containerFour.appendChild(dealerBankDiv);
-      hide(betMsg);
-      removeHide(phaseHeader[1]);
-      hide(containerThree);
-      removeHide(containerFour);
-      return;
     }
-  };
+    playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+    dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+    containerFour.appendChild(phaseHeader[1]);
+    containerFour.appendChild(playerBankDiv);
+    containerFour.appendChild(dealerBankDiv);
+    containerFour.appendChild(playAgain);
+    hide(betMsg);
+    removeHide(phaseHeader[1]);
+    hide(containerThree);
 
-  shuffleFisherYates(cards);
+    hide(containerTwo);
+    removeHide(containerFour);
+    return;
+  };
 
   const playerBankDiv = document.createElement('div');
   const dealerBankDiv = document.createElement('div');
@@ -397,6 +387,12 @@ const initialize = () => {
   const stand = document.createElement('div');
   const playerCardOne = document.createElement('div');
   const playerCardTwo = document.createElement('div');
+  const playAgain = document.createElement('div');
+
+  playAgain.innerHTML = 'Play Again';
+  playAgain.addEventListener('click', () => {
+    initialize();
+  });
 
   bet.innerHTML = `Bet`;
   deal.innerHTML = 'Deal';
@@ -410,6 +406,10 @@ const initialize = () => {
   playerCardOne.classList.add('cards');
   dealerCardTwo.classList.add('cards');
   playerCardTwo.classList.add('cards');
+  hit.classList.add('game-button');
+  stand.classList.add('game-button');
+  playAgain.classList.add('play-again');
+  playAgain.classList.add('game-button');
 
   midTwo.appendChild(betMsg);
   topTwo.appendChild(dealerBankDiv);
@@ -417,19 +417,14 @@ const initialize = () => {
   betForm.append(bet);
   betForm.append(betAmt);
   bottomTwo.append(deal);
-
   cardAmounts.appendChild(dealerCardAmount);
   cardAmounts.appendChild(playerCardAmount);
-
   dealerCards.appendChild(dealerCardOne);
   dealerCards.appendChild(dealerCardTwo);
   playerCards.appendChild(playerCardOne);
   playerCards.appendChild(playerCardTwo);
   hitStand.appendChild(hit);
   hitStand.appendChild(stand);
-
-  hit.classList.add('game-button');
-  stand.classList.add('game-button');
 
   const render = () => {
     removeAllChildNodes(dealerCards);
@@ -523,44 +518,15 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = 'You Busted';
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
-          if (playerBank <= 0) {
-            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-            phaseHeader[1].innerHTML = "You've run out of money. You lose.";
-            containerFour.appendChild(phaseHeader[1]);
-            containerFour.appendChild(playerBankDiv);
-            containerFour.appendChild(dealerBankDiv);
-            setTimeout(() => {
-              hide(betMsg);
-              removeHide(phaseHeader[1]);
-              hide(containerThree);
-              removeHide(containerFour);
-            }, 3000);
-          } else if (dealerBank <= 0) {
-            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-            phaseHeader[1].innerHTML = 'You win Blackjack!';
-            containerFour.appendChild(phaseHeader[1]);
-            containerFour.appendChild(playerBankDiv);
-            containerFour.appendChild(dealerBankDiv);
-            setTimeout(() => {
-              hide(betMsg);
-              removeHide(phaseHeader[1]);
-              hide(containerThree);
-              removeHide(containerFour);
-            }, 3000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
           } else {
             setTimeout(() => {
               hide(betMsg);
               removeHide(phaseHeader[1]);
               hide(containerThree);
-              removeHide(containerFour);
+              removeHide(containerTwo);
             }, 3000);
           }
         }
@@ -590,13 +556,17 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `You and the dealer had the same. Push.`;
-          getWinner();
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
+          } else {
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          }
         } else if (dealerCardNum === 21 && playerCardNum != 21) {
           dealerCardNum = 0;
           playerCardNum = 0;
@@ -606,13 +576,17 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `The dealer won that hand with 21`;
-          getWinner();
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
+          } else {
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          }
         } else if (playerCardNum === 21 && dealerCardNum != 21) {
           dealerCardNum = 0;
           playerCardNum = 0;
@@ -621,13 +595,17 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `You got Blackjack!`;
-          getWinner();
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
+          } else {
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          }
         } else if (dealerCardNum > 21) {
           console.log('dealer busted');
           dealerCardNum = 0;
@@ -637,13 +615,17 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `You won that hand!`;
-          getWinner();
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
+          } else {
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          }
         } else if (playerCardNum > dealerCardNum) {
           console.log('dealer loses');
           dealerCardNum = 0;
@@ -653,13 +635,17 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `You won that hand!`;
-          getWinner();
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
+          } else {
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          }
         } else if (dealerCardNum > playerCardNum) {
           dealerCardNum = 0;
           playerCardNum = 0;
@@ -669,13 +655,17 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `The dealer won that hand.`;
-          getWinner();
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
+
+          if (playerBank <= 0 || dealerBank <= 0) {
+            getWinner();
+          } else {
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          }
         }
       });
     });

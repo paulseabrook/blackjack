@@ -127,6 +127,12 @@ body {
   border-radius: 5px;
 }
 
+.playAgain {
+  outline: var(--main-red) solid;
+  padding: 20px;
+  border-radius: 5px;
+}
+
 #play:hover {
   background-color: rgba(1, 1, 1, 0.312);
   cursor: pointer;
