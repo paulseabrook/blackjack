@@ -13,6 +13,8 @@ const cardAmounts = document.querySelector('.card-amounts');
 const dealerCards = document.querySelector('.dealer-cards');
 const playerCards = document.querySelector('.player-cards');
 const hitStand = document.querySelector('.hit-stand');
+const playAgain = document.querySelector('.play-again');
+const containerFour = document.querySelector('.phase-four-container');
 
 // data structures //
 
@@ -503,13 +505,39 @@ const initialize = () => {
           phaseHeader[1].innerHTML = 'You Busted';
           hide(betMsg);
           removeHide(phaseHeader[1]);
-          if (playerBank === 0) {
-            console.log('Dealer Wins! Moving to phase 4');
-          } else if (dealerBank === 0) {
-            console.log('Player wins! Moving to phase 4');
+          if (playerBank <= 0) {
+            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+            phaseHeader[1].innerHTML = "You've run out of money. You lose.";
+            containerFour.appendChild(phaseHeader[1]);
+            containerFour.appendChild(playerBankDiv);
+            containerFour.appendChild(dealerBankDiv);
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
+          } else if (dealerBank <= 0) {
+            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+            phaseHeader[1].innerHTML = 'You win Blackjack!';
+            containerFour.appendChild(phaseHeader[1]);
+            containerFour.appendChild(playerBankDiv);
+            containerFour.appendChild(dealerBankDiv);
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
           } else {
-            hide(containerThree);
-            removeHide(containerTwo);
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
           }
         }
       });
@@ -537,11 +565,13 @@ const initialize = () => {
           playerCardNum = 0;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-          phaseHeader[1].innerHTML = `You and the Dealer had the same: ${dealerCardNum}. Push.`;
-          hide(betMsg);
-          removeHide(phaseHeader[1]);
-          hide(containerThree);
-          removeHide(containerTwo);
+          phaseHeader[1].innerHTML = `You and the Dealer had the same. Push.`;
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 2000);
         } else if (dealerCardNum === 21 && playerCardNum != 21) {
           dealerCardNum = 0;
           playerCardNum = 0;
@@ -557,7 +587,7 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 2000);
+          }, 3000);
         } else if (dealerCardNum > 21) {
           console.log('dealer loses');
           dealerCardNum = 0;
@@ -567,10 +597,12 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `You won that hand!`;
-          hide(betMsg);
-          removeHide(phaseHeader[1]);
-          hide(containerThree);
-          removeHide(containerTwo);
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 3000);
         } else if (dealerCardNum > 16 && dealerCardNum < 21) {
           if (playerCardNum > dealerCardNum) {
             console.log('dealer loses');
@@ -581,10 +613,12 @@ const initialize = () => {
             playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
             dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
             phaseHeader[1].innerHTML = `You won that hand!`;
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
           } else if (dealerCardNum > playerCardNum) {
             dealerCardNum = 0;
             playerCardNum = 0;
@@ -594,16 +628,32 @@ const initialize = () => {
             playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
             dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
             phaseHeader[1].innerHTML = `The dealer won that hand.`;
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
+            setTimeout(() => {
+              hide(betMsg);
+              removeHide(phaseHeader[1]);
+              hide(containerThree);
+              removeHide(containerTwo);
+            }, 3000);
           }
         }
         if (playerBank <= 0) {
-          console.log('Dealer Wins! Moving to phase 4');
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = "You've run out of money. You lose.";
+          containerFour.appendChild(phaseHeader[1]);
+          containerFour.appendChild(playerBankDiv);
+          containerFour.appendChild(dealerBankDiv);
+          hide(containerThree);
+          removeHide(containerFour);
         } else if (dealerBank <= 0) {
-          console.log('Player wins! Moving to phase 4');
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = 'You win Blackjack!';
+          containerFour.appendChild(phaseHeader[1]);
+          containerFour.appendChild(playerBankDiv);
+          containerFour.appendChild(dealerBankDiv);
+          hide(containerThree);
+          removeHide(containerFour);
         }
       });
     });
