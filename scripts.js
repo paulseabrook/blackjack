@@ -442,7 +442,7 @@ const initialize = () => {
       playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
       dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
       hide(phaseHeader[1]);
-      betNum = parseFloat(betAmt.value);
+      betNum = Math.abs(parseFloat(betAmt.value));
       if (!Number.isInteger(betNum) || betNum === 0) {
         betMsg.innerHTML = 'Please bet a whole number.';
       } else if (betNum > playerBank) {
@@ -455,8 +455,8 @@ const initialize = () => {
 
     deal.addEventListener('click', () => {
       if (betNum === 0 || betNum === NaN || betNum === undefined) {
-        hide(phaseHeader[1]);
         betMsg.innerHTML = 'Please place a bet.';
+        phaseHeader[1].innerHTML = 'Please place a bet';
         return;
       }
 
@@ -464,12 +464,15 @@ const initialize = () => {
       removeHide(containerThree);
 
       while (dealerCards.firstChild) {
-        dealerCards.removeChild(dealerCards.lastChild);
+        dealerCards.removeChild(dealerCards.firstChild);
       }
 
       while (playerCards.firstChild) {
-        playerCards.removeChild(playerCards.lastChild);
+        playerCards.removeChild(playerCards.firstChild);
       }
+
+      console.log(playerCards.children);
+      console.log(playerCards.childNodes);
 
       dealerCards.appendChild(dealerCardOne);
       dealerCards.appendChild(dealerCardTwo);
@@ -496,8 +499,15 @@ const initialize = () => {
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
 
+      console.log('Before hit but after these appendings');
+      console.log(playerCards.childNodes);
+      console.log(playerCards.childElementCount);
       // hit player functionality
       hit.addEventListener('click', () => {
+        console.log(`before `);
+        console.log(playerCards.childNodes);
+        console.log(playerCards.childElementCount);
+
         let hitCard = document.createElement('div');
         let newCard = cards.shift();
         hitCard.classList.add('cards');
@@ -505,10 +515,13 @@ const initialize = () => {
         playerCards.appendChild(hitCard);
         playerCardAmount.innerHTML = `Player: ${(playerCardNum +=
           newCard.amt)}`;
-        console.log(
-          `${playerCardNum} is your player card number at the moment`
-        );
+        console.log(`after`);
+        console.log(playerCards.childNodes);
+        console.log(playerCards.childElementCount);
+
         if (playerCardNum > 21) {
+          hitCard = '';
+          newCard = '';
           console.log(`${playerCardNum} after busting`);
           playerCardNum = 0;
           playerBank -= betNum;
@@ -516,8 +529,6 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = 'You Busted';
-          console.log(hitCard);
-          console.log(newCard);
 
           if (playerBank <= 0 || dealerBank <= 0) {
             getWinner();
@@ -617,7 +628,7 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
 
-          phaseHeader[1].innerHTML = `You won that hand!`;
+          phaseHeader[1].innerHTML = `Dealer busted! You won that hand!`;
 
           if (playerBank <= 0 || dealerBank <= 0) {
             getWinner();
@@ -655,14 +666,11 @@ const initialize = () => {
           dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
           dealerCardNum = 0;
           playerCardNum = 0;
-          console.log('The dealer has won, you lose');
           dealerBank += betNum;
           playerBank -= betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
           phaseHeader[1].innerHTML = `The dealer won that hand.`;
-
           if (playerBank <= 0 || dealerBank <= 0) {
             getWinner();
           } else {
@@ -674,6 +682,7 @@ const initialize = () => {
             }, 3000);
           }
         }
+        betNum = 0;
       });
     });
   };
