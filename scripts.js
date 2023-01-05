@@ -351,17 +351,35 @@ const initialize = () => {
   playerBank = 20;
   dealerBank = 20;
 
-  // https://stackoverflow.com/questions/49555273/how-to-shuffle-an-array-of-objects-in-javascript
-  // Fisher-Yates Algorithm
+  shuffleFisherYates(cards);
 
-  function shuffleFisherYates(array) {
-    let i = array.length;
-    while (i--) {
-      const ri = Math.floor(Math.random() * i);
-      [array[i], array[ri]] = [array[ri], array[i]];
+  const getWinner = () => {
+    if (playerBank <= 0) {
+      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+      phaseHeader[1].innerHTML = "You've run out of money. You lose.";
+      containerFour.appendChild(phaseHeader[1]);
+      containerFour.appendChild(playerBankDiv);
+      containerFour.appendChild(dealerBankDiv);
+      hide(betMsg);
+      removeHide(phaseHeader[1]);
+      hide(containerThree);
+      removeHide(containerFour);
+      return;
+    } else if (dealerBank <= 0) {
+      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+      phaseHeader[1].innerHTML = 'You win Blackjack!';
+      containerFour.appendChild(phaseHeader[1]);
+      containerFour.appendChild(playerBankDiv);
+      containerFour.appendChild(dealerBankDiv);
+      hide(betMsg);
+      removeHide(phaseHeader[1]);
+      hide(containerThree);
+      removeHide(containerFour);
+      return;
     }
-    return array;
-  }
+  };
 
   shuffleFisherYates(cards);
 
@@ -493,18 +511,24 @@ const initialize = () => {
         playerCards.appendChild(hitCard);
         playerCardAmount.innerHTML = `Player: ${(playerCardNum +=
           newCard.amt)}`;
-        console.log(playerCardNum);
+        console.log(
+          `${playerCardNum} is your player card number at the moment`
+        );
         if (playerCardNum > 21) {
           playerCardNum = 0;
-          console.log(playerCardNum);
+          console.log(`${playerCardNum} after busting`);
 
           playerBank -= betNum;
           dealerBank += betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = 'You Busted';
-          hide(betMsg);
-          removeHide(phaseHeader[1]);
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 3000);
           if (playerBank <= 0) {
             playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
             dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
@@ -516,7 +540,7 @@ const initialize = () => {
               hide(betMsg);
               removeHide(phaseHeader[1]);
               hide(containerThree);
-              removeHide(containerTwo);
+              removeHide(containerFour);
             }, 3000);
           } else if (dealerBank <= 0) {
             playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
@@ -529,14 +553,14 @@ const initialize = () => {
               hide(betMsg);
               removeHide(phaseHeader[1]);
               hide(containerThree);
-              removeHide(containerTwo);
+              removeHide(containerFour);
             }, 3000);
           } else {
             setTimeout(() => {
               hide(betMsg);
               removeHide(phaseHeader[1]);
               hide(containerThree);
-              removeHide(containerTwo);
+              removeHide(containerFour);
             }, 3000);
           }
         }
@@ -565,7 +589,8 @@ const initialize = () => {
           playerCardNum = 0;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-          phaseHeader[1].innerHTML = `You and the Dealer had the same. Push.`;
+          phaseHeader[1].innerHTML = `You and the dealer had the same. Push.`;
+          getWinner();
           setTimeout(() => {
             hide(betMsg);
             removeHide(phaseHeader[1]);
@@ -575,13 +600,28 @@ const initialize = () => {
         } else if (dealerCardNum === 21 && playerCardNum != 21) {
           dealerCardNum = 0;
           playerCardNum = 0;
-          console.log('The dealer has won, you lose');
+
           dealerBank += betNum;
           playerBank -= betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-          phaseHeader[1].innerHTML = `The dealer won that hand`;
-
+          phaseHeader[1].innerHTML = `The dealer won that hand with 21`;
+          getWinner();
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 3000);
+        } else if (playerCardNum === 21 && dealerCardNum != 21) {
+          dealerCardNum = 0;
+          playerCardNum = 0;
+          dealerBank -= betNum * 2;
+          playerBank += betNum * 2;
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = `You got Blackjack!`;
+          getWinner();
           setTimeout(() => {
             hide(betMsg);
             removeHide(phaseHeader[1]);
@@ -589,6 +629,22 @@ const initialize = () => {
             removeHide(containerTwo);
           }, 3000);
         } else if (dealerCardNum > 21) {
+          console.log('dealer busted');
+          dealerCardNum = 0;
+          playerCardNum = 0;
+          dealerBank -= betNum;
+          playerBank += betNum;
+          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+          phaseHeader[1].innerHTML = `You won that hand!`;
+          getWinner();
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 3000);
+        } else if (playerCardNum > dealerCardNum) {
           console.log('dealer loses');
           dealerCardNum = 0;
           playerCardNum = 0;
@@ -597,63 +653,29 @@ const initialize = () => {
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
           phaseHeader[1].innerHTML = `You won that hand!`;
+          getWinner();
           setTimeout(() => {
             hide(betMsg);
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
           }, 3000);
-        } else if (dealerCardNum > 16 && dealerCardNum < 21) {
-          if (playerCardNum > dealerCardNum) {
-            console.log('dealer loses');
-            dealerCardNum = 0;
-            playerCardNum = 0;
-            dealerBank -= betNum;
-            playerBank += betNum;
-            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-            phaseHeader[1].innerHTML = `You won that hand!`;
-            setTimeout(() => {
-              hide(betMsg);
-              removeHide(phaseHeader[1]);
-              hide(containerThree);
-              removeHide(containerTwo);
-            }, 3000);
-          } else if (dealerCardNum > playerCardNum) {
-            dealerCardNum = 0;
-            playerCardNum = 0;
-            console.log('The dealer has won, you lose');
-            dealerBank += betNum;
-            playerBank -= betNum;
-            playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-            dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-            phaseHeader[1].innerHTML = `The dealer won that hand.`;
-            setTimeout(() => {
-              hide(betMsg);
-              removeHide(phaseHeader[1]);
-              hide(containerThree);
-              removeHide(containerTwo);
-            }, 3000);
-          }
-        }
-        if (playerBank <= 0) {
+        } else if (dealerCardNum > playerCardNum) {
+          dealerCardNum = 0;
+          playerCardNum = 0;
+          console.log('The dealer has won, you lose');
+          dealerBank += betNum;
+          playerBank -= betNum;
           playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
           dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-          phaseHeader[1].innerHTML = "You've run out of money. You lose.";
-          containerFour.appendChild(phaseHeader[1]);
-          containerFour.appendChild(playerBankDiv);
-          containerFour.appendChild(dealerBankDiv);
-          hide(containerThree);
-          removeHide(containerFour);
-        } else if (dealerBank <= 0) {
-          playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-          dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-          phaseHeader[1].innerHTML = 'You win Blackjack!';
-          containerFour.appendChild(phaseHeader[1]);
-          containerFour.appendChild(playerBankDiv);
-          containerFour.appendChild(dealerBankDiv);
-          hide(containerThree);
-          removeHide(containerFour);
+          phaseHeader[1].innerHTML = `The dealer won that hand.`;
+          getWinner();
+          setTimeout(() => {
+            hide(betMsg);
+            removeHide(phaseHeader[1]);
+            hide(containerThree);
+            removeHide(containerTwo);
+          }, 3000);
         }
       });
     });
@@ -677,6 +699,18 @@ const hide = (element) => {
 const removeHide = (element) => {
   element.classList.remove('hide');
 };
+
+// https://stackoverflow.com/questions/49555273/how-to-shuffle-an-array-of-objects-in-javascript
+// Fisher-Yates Algorithm
+
+function shuffleFisherYates(array) {
+  let i = array.length;
+  while (i--) {
+    const ri = Math.floor(Math.random() * i);
+    [array[i], array[ri]] = [array[ri], array[i]];
+  }
+  return array;
+}
 
 playButton.addEventListener('click', initialize);
 
