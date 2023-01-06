@@ -14,7 +14,6 @@ const dealerCards = document.querySelector('.dealer-cards');
 const playerCards = document.querySelector('.player-cards');
 const hitStand = document.querySelector('.hit-stand');
 const containerFour = document.querySelector('.phase-four-container');
-const gameButtons = document.querySelectorAll('.game-button');
 
 // data structures //
 let dealerBank;
@@ -529,6 +528,8 @@ const initialize = () => {
       playerCardNum += newCard.amt;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
       if (playerCardNum > 21) {
+        hide(hit);
+        hide(stand);
         hitCard = '';
         newCard = '';
         console.log(`${playerCardNum} after busting`);
