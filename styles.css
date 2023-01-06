@@ -145,6 +145,7 @@ body {
 
 .hide {
   display: none;
+  transform: rotateY(180deg);
 }
 
 .game-button {
@@ -189,4 +190,5 @@ body {
   text-align: center;
   outline: solid var(--main-red);
   color: var(--main-green);
+  transform: rotateY(180deg);
 }

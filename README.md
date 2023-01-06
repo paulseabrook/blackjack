@@ -22,12 +22,22 @@ To play this game live you can click this [link](https://paulseabrook.github.io/
 
 Instructions:
 
+Note: For this initial MVP version, ace's will consistently be worth 11.
+
+- Click "Let's Play" to begin.
+- Input a whole number amount less than or equal to your "Player Bank" amount.
+- Click the "Bet" button.
+- Click the Deal button.
+- Click "Hit" based on your "Player Card" amount in lower left hand corner.
+-
+
 ## Next Steps
 
 ---
 
 ### Version 2:
 
+- As a user, I want aces to be equal to 1 or 11 depending on the situation
 - As a user, I want to see better UX/UI design. (setTimeouts, css transitions, css transforms).
 - As a user, I want to be able to pick my theme.
 - As a user, I want to be able to choose how much money myself and the dealer start with.

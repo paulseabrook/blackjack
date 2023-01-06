@@ -14,9 +14,9 @@ const dealerCards = document.querySelector('.dealer-cards');
 const playerCards = document.querySelector('.player-cards');
 const hitStand = document.querySelector('.hit-stand');
 const containerFour = document.querySelector('.phase-four-container');
+const gameButtons = document.querySelectorAll('.game-button');
 
 // data structures //
-
 let dealerBank;
 let playerBank;
 let betNum;
@@ -24,12 +24,10 @@ let dealerCardNum;
 let playerCardNum;
 let newPlayerCard;
 let newDealerCard;
-let gameCount = 0;
 let cardOne;
 let cardTwo;
 let cardThree;
 let cardFour;
-
 let cards = [
   {
     abr: '2h',
@@ -349,13 +347,68 @@ let cards = [
 
 // functionality //
 const initialize = () => {
-  // initialize for play again
-
   playerBank = 20;
   dealerBank = 20;
 
   shuffleFisherYates(cards);
 
+  // create our divs
+  const playerBankDiv = document.createElement('div');
+  const dealerBankDiv = document.createElement('div');
+  const bet = document.createElement('div');
+  const betAmt = document.createElement('input');
+  const deal = document.createElement('div');
+  const betMsg = document.createElement('p');
+  const dealerCardAmount = document.createElement('div');
+  const playerCardAmount = document.createElement('div');
+  const dealerCardOne = document.createElement('div');
+  const dealerCardTwo = document.createElement('div');
+  const hit = document.createElement('div');
+  const stand = document.createElement('div');
+  const playerCardOne = document.createElement('div');
+  const playerCardTwo = document.createElement('div');
+  const playAgain = document.createElement('div');
+
+  bet.innerHTML = `Bet`;
+  deal.innerHTML = 'Deal';
+
+  betAmt.setAttribute('type', 'number');
+
+  // add classLists
+  betAmt.classList.add('bet-amount');
+  bet.classList.add('game-button');
+  deal.classList.add('game-button');
+  dealerCardOne.classList.add('cards');
+  playerCardOne.classList.add('cards');
+  dealerCardTwo.classList.add('cards');
+  playerCardTwo.classList.add('cards');
+  hit.classList.add('game-button');
+  stand.classList.add('game-button');
+  playAgain.classList.add('play-again');
+  playAgain.classList.add('game-button');
+
+  midTwo.appendChild(betMsg);
+  topTwo.appendChild(dealerBankDiv);
+  bottomTwo.prepend(playerBankDiv);
+  betForm.append(bet);
+  betForm.append(betAmt);
+  bottomTwo.append(deal);
+  cardAmounts.appendChild(dealerCardAmount);
+  cardAmounts.appendChild(playerCardAmount);
+  dealerCards.appendChild(dealerCardOne);
+  dealerCards.appendChild(dealerCardTwo);
+  playerCards.appendChild(playerCardOne);
+  playerCards.appendChild(playerCardTwo);
+  hitStand.appendChild(hit);
+  hitStand.appendChild(stand);
+
+  // play again button for phase 4
+  playAgain.innerHTML = 'Play Again';
+  playAgain.addEventListener('click', () => {
+    window.location.reload();
+  });
+
+  // function for when player or dealer run out of money, move to phase 4
   const getWinner = () => {
     hide(betMsg);
     removeHide(phaseHeader[1]);
@@ -386,69 +439,14 @@ const initialize = () => {
     }, 3000);
   };
 
-  const playerBankDiv = document.createElement('div');
-  const dealerBankDiv = document.createElement('div');
-  const bet = document.createElement('div');
-  const betAmt = document.createElement('input');
-  const deal = document.createElement('div');
-  const betMsg = document.createElement('p');
-  const dealerCardAmount = document.createElement('div');
-  const playerCardAmount = document.createElement('div');
-  const dealerCardOne = document.createElement('div');
-  const dealerCardTwo = document.createElement('div');
-  const hit = document.createElement('div');
-  const stand = document.createElement('div');
-  const playerCardOne = document.createElement('div');
-  const playerCardTwo = document.createElement('div');
-  const playAgain = document.createElement('div');
-
-  playAgain.innerHTML = 'Play Again';
-  playAgain.addEventListener('click', () => {
-    window.location.reload();
-  });
-
-  bet.innerHTML = `Bet`;
-  deal.innerHTML = 'Deal';
-
-  betAmt.setAttribute('type', 'number');
-  betAmt.classList.add('bet-amount');
-
-  bet.classList.add('game-button');
-  deal.classList.add('game-button');
-  dealerCardOne.classList.add('cards');
-  playerCardOne.classList.add('cards');
-  dealerCardTwo.classList.add('cards');
-  playerCardTwo.classList.add('cards');
-  hit.classList.add('game-button');
-  stand.classList.add('game-button');
-  playAgain.classList.add('play-again');
-  playAgain.classList.add('game-button');
-
-  midTwo.appendChild(betMsg);
-  topTwo.appendChild(dealerBankDiv);
-  bottomTwo.prepend(playerBankDiv);
-  betForm.append(bet);
-  betForm.append(betAmt);
-  bottomTwo.append(deal);
-  cardAmounts.appendChild(dealerCardAmount);
-  cardAmounts.appendChild(playerCardAmount);
-  dealerCards.appendChild(dealerCardOne);
-  dealerCards.appendChild(dealerCardTwo);
-  playerCards.appendChild(playerCardOne);
-  playerCards.appendChild(playerCardTwo);
-  hitStand.appendChild(hit);
-  hitStand.appendChild(stand);
-
+  //
   const render = () => {
     removeAllChildNodes(dealerCards);
     removeAllChildNodes(playerCards);
-
     playerCardNum = 0;
     dealerCardNum = 0;
-
     playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
     dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
     hide(containerOne);
     removeHide(containerTwo);
 
@@ -484,6 +482,8 @@ const initialize = () => {
 
       hide(containerTwo);
       removeHide(containerThree);
+      removeHide(hit);
+      removeHide(stand);
 
       while (dealerCards.firstChild) {
         dealerCards.removeChild(dealerCards.firstChild);
@@ -497,9 +497,7 @@ const initialize = () => {
       dealerCards.appendChild(dealerCardTwo);
       playerCards.appendChild(playerCardOne);
       playerCards.appendChild(playerCardTwo);
-
       dealerCardOne.classList.add('hidden');
-
       cardOne = cards.shift();
       reDeck(cards);
       cardTwo = cards.shift();
@@ -508,34 +506,23 @@ const initialize = () => {
       reDeck(cards);
       cardFour = cards.shift();
       reDeck(cards);
-
       playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`;
       playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`;
       playerCardNum = cardOne.amt + cardTwo.amt;
-
       dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`;
       dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
       dealerCardNum = cardFour.amt;
-
-      haveDealAce(cardOne, playerCardNum, dealerCardNum);
-      haveDealAce(cardTwo, playerCardNum, dealerCardNum);
-      haveDealAce(cardThree, playerCardNum, dealerCardNum);
-      haveDealAce(cardFour, playerCardNum, dealerCardNum);
-
       hit.innerHTML = 'Hit';
       stand.innerHTML = 'Stand';
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
     });
+
     // hit player functionality
     hit.addEventListener('click', () => {
-      reDeck(cards);
-
       let hitCard = document.createElement('div');
       let newCard = cards.shift();
       reDeck(cards);
-      haveHitAce(newCard);
-
       hitCard.classList.add('cards');
       hitCard.innerHTML = `${newCard.name} ${newCard.emj}`;
       playerCards.appendChild(hitCard);
@@ -567,10 +554,11 @@ const initialize = () => {
 
     // stand dealer functionality
     stand.addEventListener('click', () => {
-      reDeck(cards);
-      dealerCardOne.classList.remove('hidden');
+      hide(hit);
+      hide(stand);
       dealerCardNum = cardThree.amt + cardFour.amt;
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
+      dealerCardOne.classList.remove('hidden');
 
       while (dealerCardNum < 17) {
         let newDealCard = cards.shift();
@@ -648,7 +636,6 @@ const initialize = () => {
         playerBank += betNum;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
         phaseHeader[1].innerHTML = `Dealer busted! You won that hand!`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -669,7 +656,6 @@ const initialize = () => {
         playerBank += betNum;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
         phaseHeader[1].innerHTML = `You won that hand!`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -691,6 +677,7 @@ const initialize = () => {
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
         phaseHeader[1].innerHTML = `The dealer won that hand.`;
+
         if (playerBank <= 0 || dealerBank <= 0) {
           getWinner();
         } else {
@@ -709,25 +696,25 @@ const initialize = () => {
 };
 
 // https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
-// remove all children
+// function to remove all children elements from a parent element
 const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
 };
-// add hide class
+
+// add hide class to an element
 const hide = (element) => {
   element.classList.add('hide');
 };
 
-// remove hide class
+// remove hide class from an element
 const removeHide = (element) => {
   element.classList.remove('hide');
 };
 
 // https://stackoverflow.com/questions/49555273/how-to-shuffle-an-array-of-objects-in-javascript
 // Fisher-Yates Algorithm
-
 function shuffleFisherYates(array) {
   let i = array.length;
   while (i--) {
@@ -737,9 +724,11 @@ function shuffleFisherYates(array) {
   return array;
 }
 
+// If the cards run out, put them back into the deck and shuffle them.
 const reDeck = (deck) => {
   if (deck.length === 0) {
-    let deck = [
+    let newDeck = [];
+    newDeck = [
       {
         abr: '2h',
         name: 'two of hearts',
@@ -1055,34 +1044,8 @@ const reDeck = (deck) => {
         emj: '♦',
       },
     ];
-    console.log('Deck Redecked');
-    shuffleFisherYates(deck);
-    return deck;
-  }
-};
-
-// if player card amount !> 21, cards[i].amt = 11, else, cards[i] = 1
-
-//haveAce function
-
-const haveDealAce = (obj, playNum, dealNum) => {
-  if (Object.values(obj.abr).indexOf('a') > -1) {
-    if (playNum > 21) {
-      obj.amt = 1;
-    }
-    if (dealNum > 21) {
-      obj.amt = 1;
-    }
-  }
-};
-
-const haveHitAce = (obj, playNum) => {
-  if (Object.values(obj.abr).indexOf('a') > -1) {
-    console.log('This is working');
-    let total = playNum + obj.amt;
-    if (total > 21) {
-      obj.amt = 1;
-    }
+    shuffleFisherYates(newDeck);
+    cards = newDeck;
   }
 };
 
