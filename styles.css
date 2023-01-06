@@ -122,7 +122,7 @@ body {
 }
 
 #play {
-  background-color: #f44336;
+  background-color: #d33a2f;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -134,7 +134,7 @@ body {
 }
 
 .play-again {
-  background-color: #f44336;
+  background-color: #d33a2f;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -156,11 +156,10 @@ body {
 
 .hide {
   display: none;
-  transform: rotateY(180deg);
 }
 
 .game-button {
-  background-color: #f44336;
+  background-color: #d33a2f;
   border: none;
   color: white;
   padding: 15px 32px;

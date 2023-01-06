@@ -420,11 +420,14 @@ const initialize = () => {
     setTimeout(() => {
       if (playerBank <= 0) {
         phaseHeader[1].innerHTML = "You've run out of money. You lose.";
+        playerBankDiv.innerHTML = `Player Bank: $0.00`;
+        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
       } else if (dealerBank <= 0) {
         phaseHeader[1].innerHTML = 'You win Blackjack!';
+        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+        dealerBankDiv.innerHTML = `Dealer Bank: $0.00`;
       }
-      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
       containerFour.appendChild(phaseHeader[1]);
       containerFour.appendChild(playerBankDiv);
       containerFour.appendChild(dealerBankDiv);
@@ -435,14 +438,13 @@ const initialize = () => {
       hide(containerTwo);
       removeHide(containerFour);
       return;
-    }, 3000);
+    }, 2);
   };
 
-  // function for if player goes over 21
   const overTwentyOne = () => {
     if (playerCardNum > 21) {
-      hide(hit);
-      hide(stand);
+      hit.style.display = 'none';
+      stand.style.display = 'none';
       hitCard = '';
       newCard = '';
       console.log(`${playerCardNum} after busting`);
@@ -461,7 +463,7 @@ const initialize = () => {
           removeHide(phaseHeader[1]);
           hide(containerThree);
           removeHide(containerTwo);
-        }, 3000);
+        }, 2500);
       }
     }
   };
@@ -474,37 +476,35 @@ const initialize = () => {
     playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
     dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
     hide(containerOne);
+    hide(containerThree);
     removeHide(containerTwo);
+
+    deal.style.visibility = 'hidden';
 
     bet.addEventListener('click', () => {
       playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
       dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
       hide(phaseHeader[1]);
       betNum = Math.abs(parseFloat(betAmt.value));
-      if (!Number.isInteger(betNum) || betNum === 0) {
+      if (!Number.isInteger(betNum) || betNum === 0 || betNum === NaN) {
         betMsg.innerHTML = 'Please bet a whole number.';
       } else if (betNum > playerBank) {
         betMsg.innerHTML = "Woah there! You don't have enough money!";
       } else {
         betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
+        deal.style.visibility = 'visible';
       }
       removeHide(betMsg);
     });
 
     deal.addEventListener('click', () => {
-      reDeck(cards);
-
-      if (betNum === 0 || betNum === NaN || betNum === undefined) {
-        betMsg.innerHTML = 'Please place a bet.';
-        hide(phaseHeader[1]);
-        removeHide(betMsg);
-        return;
-      } else if (betNum > dealerBank) {
-        betMsg.innerHTML = "Dealer doesn't have enough";
-        hide(phaseHeader[1]);
-        removeHide(betMsg);
+      if (betNum > dealerBank) {
+        betMsg.innerHTML = 'The dealer does not have enough';
         return;
       }
+      hit.style.display = 'flex';
+      stand.style.display = 'flex';
+      reDeck(cards);
 
       hide(containerTwo);
       removeHide(containerThree);
@@ -523,7 +523,6 @@ const initialize = () => {
       dealerCards.appendChild(dealerCardTwo);
       playerCards.appendChild(playerCardOne);
       playerCards.appendChild(playerCardTwo);
-
       dealerCardOne.classList.add('hidden');
       cardOne = cards.shift();
       reDeck(cards);
@@ -561,8 +560,8 @@ const initialize = () => {
 
     // stand dealer functionality
     stand.addEventListener('click', () => {
-      hide(hit);
-      hide(stand);
+      hit.style.display = 'none';
+      stand.style.display = 'none';
       dealerCardNum = cardThree.amt + cardFour.amt;
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       dealerCardOne.classList.remove('hidden');
@@ -583,6 +582,7 @@ const initialize = () => {
         playerCardNum = 0;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+        phaseHeader[1].innerHTML = `Push`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
           getWinner();
@@ -592,7 +592,7 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 3000);
+          }, 2500);
         }
       } else if (dealerCardNum === 21 && playerCardNum != 21) {
         dealerCardNum = 0;
@@ -611,7 +611,7 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 3000);
+          }, 2500);
         }
       } else if (playerCardNum === 21 && dealerCardNum != 21) {
         dealerCardNum = 0;
@@ -630,7 +630,7 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 3000);
+          }, 2500);
         }
       } else if (dealerCardNum > 21) {
         dealerCardNum = 0;
@@ -649,7 +649,7 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 3000);
+          }, 2500);
         }
       } else if (playerCardNum > dealerCardNum) {
         dealerCardNum = 0;
@@ -668,9 +668,11 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 3000);
+          }, 2500);
         }
       } else if (dealerCardNum > playerCardNum) {
+        dealerCardNum = 0;
+        playerCardNum = 0;
         dealerBank += betNum;
         playerBank -= betNum;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
@@ -685,10 +687,9 @@ const initialize = () => {
             removeHide(phaseHeader[1]);
             hide(containerThree);
             removeHide(containerTwo);
-          }, 3000);
+          }, 2500);
         }
       }
-
       betNum = 0;
     });
   };

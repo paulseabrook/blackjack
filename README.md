@@ -4,10 +4,7 @@ Blackjack is a card game where both the dealer and the player are dealt a hand o
 
 ---
 
-![phase1](./images/phase1.png)
-![phase2](./images/phase2.png)
-![phase3](./images/phase3.png)
-![phase4](./images/phase4.png)
+// screenshots here
 
 ## Technology Used:
 
