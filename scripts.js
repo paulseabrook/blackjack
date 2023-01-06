@@ -468,328 +468,15 @@ const initialize = () => {
     });
 
     deal.addEventListener('click', () => {
-      if (cards.length === 0) {
-        let cards = [
-          {
-            abr: '2h',
-            name: 'two of hearts',
-            amt: 2,
-            emj: '❤️',
-          },
-          {
-            abr: '3h',
-            name: 'three of hearts',
-            amt: 3,
-            emj: '❤️',
-          },
-          {
-            abr: '4h',
-            name: 'four of hearts',
-            amt: 4,
-            emj: '❤️',
-          },
-          {
-            abr: '5h',
-            name: 'five of hearts',
-            amt: 5,
-            emj: '❤️',
-          },
-          {
-            abr: '6h',
-            name: 'six of hearts',
-            amt: 6,
-            emj: '❤️',
-          },
-          {
-            abr: '7h',
-            name: 'seven of hearts',
-            amt: 7,
-            emj: '❤️',
-          },
-          {
-            abr: '8h',
-            name: 'eight of hearts',
-            amt: 8,
-            emj: '❤️',
-          },
-          {
-            abr: '9h',
-            name: 'nine of hearts',
-            amt: 9,
-            emj: '❤️',
-          },
-          {
-            abr: '10h',
-            name: 'ten of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'jh',
-            name: 'jack of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'qh',
-            name: 'queen of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'kh',
-            name: 'king of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'ah',
-            name: 'ace of hearts',
-            amt: 11,
-            emj: '❤️',
-          },
-
-          {
-            abr: '2s',
-            name: 'two of spades',
-            amt: 2,
-            emj: '♠️',
-          },
-          {
-            abr: '3s',
-            name: 'three of spades',
-            amt: 3,
-            emj: '♠️',
-          },
-          {
-            abr: '4s',
-            name: 'four of spades',
-            amt: 4,
-            emj: '♠️',
-          },
-          {
-            abr: '5s',
-            name: 'five of spades',
-            amt: 5,
-            emj: '♠️',
-          },
-          {
-            abr: '6s',
-            name: 'six of spades',
-            amt: 6,
-            emj: '♠️',
-          },
-          {
-            abr: '7s',
-            name: 'seven of spades',
-            amt: 7,
-            emj: '♠️',
-          },
-          {
-            abr: '8s',
-            name: 'eight of spades',
-            amt: 8,
-            emj: '♠️',
-          },
-          {
-            abr: '9s',
-            name: 'nine of spades',
-            amt: 9,
-            emj: '♠️',
-          },
-          {
-            abr: '10s',
-            name: 'ten of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'js',
-            name: 'jack of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'qs',
-            name: 'queen of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'ks',
-            name: 'king of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'as',
-            name: 'ace of spades',
-            amt: 11,
-            emj: '♠️',
-          },
-
-          {
-            abr: '2c',
-            name: 'two of clubs',
-            amt: 2,
-            emj: '♣️',
-          },
-          {
-            abr: '3c',
-            name: 'three of clubs',
-            amt: 3,
-            emj: '♣️',
-          },
-          {
-            abr: '4c',
-            name: 'four of clubs',
-            amt: 4,
-            emj: '♣️',
-          },
-          {
-            abr: '5c',
-            name: 'five of clubs',
-            amt: 5,
-            emj: '♣️',
-          },
-          {
-            abr: '6c',
-            name: 'six of clubs',
-            amt: 6,
-            emj: '♣️',
-          },
-          {
-            abr: '7c',
-            name: 'seven of clubs',
-            amt: 7,
-            emj: '♣️',
-          },
-          {
-            abr: '8c',
-            name: 'eight of clubs',
-            amt: 8,
-            emj: '♣️',
-          },
-          {
-            abr: '9c',
-            name: 'nine of clubs',
-            amt: 9,
-            emj: '♣️',
-          },
-          {
-            abr: '10c',
-            name: 'ten of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'jc',
-            name: 'jack of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'qc',
-            name: 'queen of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'kc',
-            name: 'king of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'ac',
-            name: 'ace of clubs',
-            amt: 11,
-            emj: '♣️',
-          },
-          {
-            abr: '2d',
-            name: 'two of diamonds',
-            amt: 2,
-            emj: '♦️',
-          },
-          {
-            abr: '3d',
-            name: 'three of diamonds',
-            amt: 3,
-            emj: '♦',
-          },
-          {
-            abr: '4d',
-            name: 'four of diamonds',
-            amt: 4,
-            emj: '♦',
-          },
-          {
-            abr: '5d',
-            name: 'five of diamonds',
-            amt: 5,
-            emj: '♦',
-          },
-          {
-            abr: '6d',
-            name: 'six of diamonds',
-            amt: 6,
-            emj: '♦',
-          },
-          {
-            abr: '7d',
-            name: 'seven of diamonds',
-            amt: 7,
-            emj: '♦',
-          },
-          {
-            abr: '8d',
-            name: 'eight of diamonds',
-            amt: 8,
-            emj: '♦',
-          },
-          {
-            abr: '9d',
-            name: 'nine of diamonds',
-            amt: 9,
-            emj: '♦',
-          },
-          {
-            abr: '10d',
-            name: 'ten of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'jd',
-            name: 'jack of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'qd',
-            name: 'queen of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'kd',
-            name: 'king of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'ad',
-            name: 'ace of diamonds',
-            amt: 11,
-            emj: '♦',
-          },
-        ];
-        shuffleFisherYates(cards);
-      }
+      reDeck(cards);
 
       if (betNum === 0 || betNum === NaN || betNum === undefined) {
         betMsg.innerHTML = 'Please place a bet.';
+        hide(phaseHeader[1]);
+        removeHide(betMsg);
+        return;
+      } else if (betNum > dealerBank) {
+        betMsg.innerHTML = "Dealer doesn't have enough";
         hide(phaseHeader[1]);
         removeHide(betMsg);
         return;
@@ -814,9 +501,13 @@ const initialize = () => {
       dealerCardOne.classList.add('hidden');
 
       cardOne = cards.shift();
+      reDeck(cards);
       cardTwo = cards.shift();
+      reDeck(cards);
       cardThree = cards.shift();
+      reDeck(cards);
       cardFour = cards.shift();
+      reDeck(cards);
 
       playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`;
       playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`;
@@ -826,6 +517,11 @@ const initialize = () => {
       dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
       dealerCardNum = cardFour.amt;
 
+      haveDealAce(cardOne, playerCardNum, dealerCardNum);
+      haveDealAce(cardTwo, playerCardNum, dealerCardNum);
+      haveDealAce(cardThree, playerCardNum, dealerCardNum);
+      haveDealAce(cardFour, playerCardNum, dealerCardNum);
+
       hit.innerHTML = 'Hit';
       stand.innerHTML = 'Stand';
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
@@ -833,343 +529,18 @@ const initialize = () => {
     });
     // hit player functionality
     hit.addEventListener('click', () => {
-      if (cards.length === 0) {
-        let cards = [
-          {
-            abr: '2h',
-            name: 'two of hearts',
-            amt: 2,
-            emj: '❤️',
-          },
-          {
-            abr: '3h',
-            name: 'three of hearts',
-            amt: 3,
-            emj: '❤️',
-          },
-          {
-            abr: '4h',
-            name: 'four of hearts',
-            amt: 4,
-            emj: '❤️',
-          },
-          {
-            abr: '5h',
-            name: 'five of hearts',
-            amt: 5,
-            emj: '❤️',
-          },
-          {
-            abr: '6h',
-            name: 'six of hearts',
-            amt: 6,
-            emj: '❤️',
-          },
-          {
-            abr: '7h',
-            name: 'seven of hearts',
-            amt: 7,
-            emj: '❤️',
-          },
-          {
-            abr: '8h',
-            name: 'eight of hearts',
-            amt: 8,
-            emj: '❤️',
-          },
-          {
-            abr: '9h',
-            name: 'nine of hearts',
-            amt: 9,
-            emj: '❤️',
-          },
-          {
-            abr: '10h',
-            name: 'ten of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'jh',
-            name: 'jack of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'qh',
-            name: 'queen of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'kh',
-            name: 'king of hearts',
-            amt: 10,
-            emj: '❤️',
-          },
-          {
-            abr: 'ah',
-            name: 'ace of hearts',
-            amt: 11,
-            emj: '❤️',
-          },
+      reDeck(cards);
 
-          {
-            abr: '2s',
-            name: 'two of spades',
-            amt: 2,
-            emj: '♠️',
-          },
-          {
-            abr: '3s',
-            name: 'three of spades',
-            amt: 3,
-            emj: '♠️',
-          },
-          {
-            abr: '4s',
-            name: 'four of spades',
-            amt: 4,
-            emj: '♠️',
-          },
-          {
-            abr: '5s',
-            name: 'five of spades',
-            amt: 5,
-            emj: '♠️',
-          },
-          {
-            abr: '6s',
-            name: 'six of spades',
-            amt: 6,
-            emj: '♠️',
-          },
-          {
-            abr: '7s',
-            name: 'seven of spades',
-            amt: 7,
-            emj: '♠️',
-          },
-          {
-            abr: '8s',
-            name: 'eight of spades',
-            amt: 8,
-            emj: '♠️',
-          },
-          {
-            abr: '9s',
-            name: 'nine of spades',
-            amt: 9,
-            emj: '♠️',
-          },
-          {
-            abr: '10s',
-            name: 'ten of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'js',
-            name: 'jack of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'qs',
-            name: 'queen of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'ks',
-            name: 'king of spades',
-            amt: 10,
-            emj: '♠️',
-          },
-          {
-            abr: 'as',
-            name: 'ace of spades',
-            amt: 11,
-            emj: '♠️',
-          },
-
-          {
-            abr: '2c',
-            name: 'two of clubs',
-            amt: 2,
-            emj: '♣️',
-          },
-          {
-            abr: '3c',
-            name: 'three of clubs',
-            amt: 3,
-            emj: '♣️',
-          },
-          {
-            abr: '4c',
-            name: 'four of clubs',
-            amt: 4,
-            emj: '♣️',
-          },
-          {
-            abr: '5c',
-            name: 'five of clubs',
-            amt: 5,
-            emj: '♣️',
-          },
-          {
-            abr: '6c',
-            name: 'six of clubs',
-            amt: 6,
-            emj: '♣️',
-          },
-          {
-            abr: '7c',
-            name: 'seven of clubs',
-            amt: 7,
-            emj: '♣️',
-          },
-          {
-            abr: '8c',
-            name: 'eight of clubs',
-            amt: 8,
-            emj: '♣️',
-          },
-          {
-            abr: '9c',
-            name: 'nine of clubs',
-            amt: 9,
-            emj: '♣️',
-          },
-          {
-            abr: '10c',
-            name: 'ten of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'jc',
-            name: 'jack of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'qc',
-            name: 'queen of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'kc',
-            name: 'king of clubs',
-            amt: 10,
-            emj: '♣️',
-          },
-          {
-            abr: 'ac',
-            name: 'ace of clubs',
-            amt: 11,
-            emj: '♣️',
-          },
-          {
-            abr: '2d',
-            name: 'two of diamonds',
-            amt: 2,
-            emj: '♦️',
-          },
-          {
-            abr: '3d',
-            name: 'three of diamonds',
-            amt: 3,
-            emj: '♦',
-          },
-          {
-            abr: '4d',
-            name: 'four of diamonds',
-            amt: 4,
-            emj: '♦',
-          },
-          {
-            abr: '5d',
-            name: 'five of diamonds',
-            amt: 5,
-            emj: '♦',
-          },
-          {
-            abr: '6d',
-            name: 'six of diamonds',
-            amt: 6,
-            emj: '♦',
-          },
-          {
-            abr: '7d',
-            name: 'seven of diamonds',
-            amt: 7,
-            emj: '♦',
-          },
-          {
-            abr: '8d',
-            name: 'eight of diamonds',
-            amt: 8,
-            emj: '♦',
-          },
-          {
-            abr: '9d',
-            name: 'nine of diamonds',
-            amt: 9,
-            emj: '♦',
-          },
-          {
-            abr: '10d',
-            name: 'ten of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'jd',
-            name: 'jack of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'qd',
-            name: 'queen of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'kd',
-            name: 'king of diamonds',
-            amt: 10,
-            emj: '♦',
-          },
-          {
-            abr: 'ad',
-            name: 'ace of diamonds',
-            amt: 11,
-            emj: '♦',
-          },
-        ];
-      }
-      shuffleFisherYates(cards);
       let hitCard = document.createElement('div');
       let newCard = cards.shift();
-      console.log(newCard);
-      console.log(playerCardNum);
+      reDeck(cards);
+      haveHitAce(newCard);
+
       hitCard.classList.add('cards');
       hitCard.innerHTML = `${newCard.name} ${newCard.emj}`;
       playerCards.appendChild(hitCard);
-      if (playerCardNum > 21) {
-        if (Object.values(newCard.abr).indexOf('a') > -1) {
-          newCard.amt = 11;
-          playerCardAmount.innerHTML = `Player: ${(playerCardNum +=
-            newCard.amt)}`;
-        }
-      } else {
-        playerCardAmount.innerHTML = `Player: ${(playerCardNum +=
-          newCard.amt)}`;
-      }
-
+      playerCardNum += newCard.amt;
+      playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
       if (playerCardNum > 21) {
         hitCard = '';
         newCard = '';
@@ -1196,12 +567,14 @@ const initialize = () => {
 
     // stand dealer functionality
     stand.addEventListener('click', () => {
+      reDeck(cards);
       dealerCardOne.classList.remove('hidden');
       dealerCardNum = cardThree.amt + cardFour.amt;
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
 
       while (dealerCardNum < 17) {
         let newDealCard = cards.shift();
+        reDeck(cards);
         dealerCardNum += newDealCard.amt;
         let dealCard = document.createElement('div');
         dealCard.classList.add('cards');
@@ -1210,7 +583,6 @@ const initialize = () => {
       }
 
       if (dealerCardNum === playerCardNum) {
-        console.log('This is a push');
         dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
@@ -1256,7 +628,6 @@ const initialize = () => {
         playerBank += betNum * 2;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         phaseHeader[1].innerHTML = `You got Blackjack!`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -1270,7 +641,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (dealerCardNum > 21) {
-        console.log('dealer busted');
         dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
@@ -1292,7 +662,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (playerCardNum > dealerCardNum) {
-        console.log('dealer loses');
         dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
@@ -1368,6 +737,353 @@ function shuffleFisherYates(array) {
   return array;
 }
 
-playButton.addEventListener('click', initialize);
+const reDeck = (deck) => {
+  if (deck.length === 0) {
+    let deck = [
+      {
+        abr: '2h',
+        name: 'two of hearts',
+        amt: 2,
+        emj: '❤️',
+      },
+      {
+        abr: '3h',
+        name: 'three of hearts',
+        amt: 3,
+        emj: '❤️',
+      },
+      {
+        abr: '4h',
+        name: 'four of hearts',
+        amt: 4,
+        emj: '❤️',
+      },
+      {
+        abr: '5h',
+        name: 'five of hearts',
+        amt: 5,
+        emj: '❤️',
+      },
+      {
+        abr: '6h',
+        name: 'six of hearts',
+        amt: 6,
+        emj: '❤️',
+      },
+      {
+        abr: '7h',
+        name: 'seven of hearts',
+        amt: 7,
+        emj: '❤️',
+      },
+      {
+        abr: '8h',
+        name: 'eight of hearts',
+        amt: 8,
+        emj: '❤️',
+      },
+      {
+        abr: '9h',
+        name: 'nine of hearts',
+        amt: 9,
+        emj: '❤️',
+      },
+      {
+        abr: '10h',
+        name: 'ten of hearts',
+        amt: 10,
+        emj: '❤️',
+      },
+      {
+        abr: 'jh',
+        name: 'jack of hearts',
+        amt: 10,
+        emj: '❤️',
+      },
+      {
+        abr: 'qh',
+        name: 'queen of hearts',
+        amt: 10,
+        emj: '❤️',
+      },
+      {
+        abr: 'kh',
+        name: 'king of hearts',
+        amt: 10,
+        emj: '❤️',
+      },
+      {
+        abr: 'ah',
+        name: 'ace of hearts',
+        amt: 11,
+        emj: '❤️',
+      },
+
+      {
+        abr: '2s',
+        name: 'two of spades',
+        amt: 2,
+        emj: '♠️',
+      },
+      {
+        abr: '3s',
+        name: 'three of spades',
+        amt: 3,
+        emj: '♠️',
+      },
+      {
+        abr: '4s',
+        name: 'four of spades',
+        amt: 4,
+        emj: '♠️',
+      },
+      {
+        abr: '5s',
+        name: 'five of spades',
+        amt: 5,
+        emj: '♠️',
+      },
+      {
+        abr: '6s',
+        name: 'six of spades',
+        amt: 6,
+        emj: '♠️',
+      },
+      {
+        abr: '7s',
+        name: 'seven of spades',
+        amt: 7,
+        emj: '♠️',
+      },
+      {
+        abr: '8s',
+        name: 'eight of spades',
+        amt: 8,
+        emj: '♠️',
+      },
+      {
+        abr: '9s',
+        name: 'nine of spades',
+        amt: 9,
+        emj: '♠️',
+      },
+      {
+        abr: '10s',
+        name: 'ten of spades',
+        amt: 10,
+        emj: '♠️',
+      },
+      {
+        abr: 'js',
+        name: 'jack of spades',
+        amt: 10,
+        emj: '♠️',
+      },
+      {
+        abr: 'qs',
+        name: 'queen of spades',
+        amt: 10,
+        emj: '♠️',
+      },
+      {
+        abr: 'ks',
+        name: 'king of spades',
+        amt: 10,
+        emj: '♠️',
+      },
+      {
+        abr: 'as',
+        name: 'ace of spades',
+        amt: 11,
+        emj: '♠️',
+      },
+
+      {
+        abr: '2c',
+        name: 'two of clubs',
+        amt: 2,
+        emj: '♣️',
+      },
+      {
+        abr: '3c',
+        name: 'three of clubs',
+        amt: 3,
+        emj: '♣️',
+      },
+      {
+        abr: '4c',
+        name: 'four of clubs',
+        amt: 4,
+        emj: '♣️',
+      },
+      {
+        abr: '5c',
+        name: 'five of clubs',
+        amt: 5,
+        emj: '♣️',
+      },
+      {
+        abr: '6c',
+        name: 'six of clubs',
+        amt: 6,
+        emj: '♣️',
+      },
+      {
+        abr: '7c',
+        name: 'seven of clubs',
+        amt: 7,
+        emj: '♣️',
+      },
+      {
+        abr: '8c',
+        name: 'eight of clubs',
+        amt: 8,
+        emj: '♣️',
+      },
+      {
+        abr: '9c',
+        name: 'nine of clubs',
+        amt: 9,
+        emj: '♣️',
+      },
+      {
+        abr: '10c',
+        name: 'ten of clubs',
+        amt: 10,
+        emj: '♣️',
+      },
+      {
+        abr: 'jc',
+        name: 'jack of clubs',
+        amt: 10,
+        emj: '♣️',
+      },
+      {
+        abr: 'qc',
+        name: 'queen of clubs',
+        amt: 10,
+        emj: '♣️',
+      },
+      {
+        abr: 'kc',
+        name: 'king of clubs',
+        amt: 10,
+        emj: '♣️',
+      },
+      {
+        abr: 'ac',
+        name: 'ace of clubs',
+        amt: 11,
+        emj: '♣️',
+      },
+      {
+        abr: '2d',
+        name: 'two of diamonds',
+        amt: 2,
+        emj: '♦️',
+      },
+      {
+        abr: '3d',
+        name: 'three of diamonds',
+        amt: 3,
+        emj: '♦',
+      },
+      {
+        abr: '4d',
+        name: 'four of diamonds',
+        amt: 4,
+        emj: '♦',
+      },
+      {
+        abr: '5d',
+        name: 'five of diamonds',
+        amt: 5,
+        emj: '♦',
+      },
+      {
+        abr: '6d',
+        name: 'six of diamonds',
+        amt: 6,
+        emj: '♦',
+      },
+      {
+        abr: '7d',
+        name: 'seven of diamonds',
+        amt: 7,
+        emj: '♦',
+      },
+      {
+        abr: '8d',
+        name: 'eight of diamonds',
+        amt: 8,
+        emj: '♦',
+      },
+      {
+        abr: '9d',
+        name: 'nine of diamonds',
+        amt: 9,
+        emj: '♦',
+      },
+      {
+        abr: '10d',
+        name: 'ten of diamonds',
+        amt: 10,
+        emj: '♦',
+      },
+      {
+        abr: 'jd',
+        name: 'jack of diamonds',
+        amt: 10,
+        emj: '♦',
+      },
+      {
+        abr: 'qd',
+        name: 'queen of diamonds',
+        amt: 10,
+        emj: '♦',
+      },
+      {
+        abr: 'kd',
+        name: 'king of diamonds',
+        amt: 10,
+        emj: '♦',
+      },
+      {
+        abr: 'ad',
+        name: 'ace of diamonds',
+        amt: 11,
+        emj: '♦',
+      },
+    ];
+    console.log('Deck Redecked');
+    shuffleFisherYates(deck);
+    return deck;
+  }
+};
 
 // if player card amount !> 21, cards[i].amt = 11, else, cards[i] = 1
+
+//haveAce function
+
+const haveDealAce = (obj, playNum, dealNum) => {
+  if (Object.values(obj.abr).indexOf('a') > -1) {
+    if (playNum > 21) {
+      obj.amt = 1;
+    }
+    if (dealNum > 21) {
+      obj.amt = 1;
+    }
+  }
+};
+
+const haveHitAce = (obj, playNum) => {
+  if (Object.values(obj.abr).indexOf('a') > -1) {
+    console.log('This is working');
+    let total = playNum + obj.amt;
+    if (total > 21) {
+      obj.amt = 1;
+    }
+  }
+};
+
+playButton.addEventListener('click', initialize);
