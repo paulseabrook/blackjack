@@ -438,7 +438,34 @@ const initialize = () => {
     }, 3000);
   };
 
-  //
+  // function for if player goes over 21
+  const overTwentyOne = () => {
+    if (playerCardNum > 21) {
+      hide(hit);
+      hide(stand);
+      hitCard = '';
+      newCard = '';
+      console.log(`${playerCardNum} after busting`);
+      playerCardNum = 0;
+      playerBank -= betNum;
+      dealerBank += betNum;
+      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+      phaseHeader[1].innerHTML = 'You Busted';
+
+      if (playerBank <= 0 || dealerBank <= 0) {
+        getWinner();
+      } else {
+        setTimeout(() => {
+          hide(betMsg);
+          removeHide(phaseHeader[1]);
+          hide(containerThree);
+          removeHide(containerTwo);
+        }, 3000);
+      }
+    }
+  };
+
   const render = () => {
     removeAllChildNodes(dealerCards);
     removeAllChildNodes(playerCards);
@@ -496,6 +523,7 @@ const initialize = () => {
       dealerCards.appendChild(dealerCardTwo);
       playerCards.appendChild(playerCardOne);
       playerCards.appendChild(playerCardTwo);
+
       dealerCardOne.classList.add('hidden');
       cardOne = cards.shift();
       reDeck(cards);
@@ -515,6 +543,7 @@ const initialize = () => {
       stand.innerHTML = 'Stand';
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
+      overTwentyOne();
     });
 
     // hit player functionality
@@ -527,30 +556,7 @@ const initialize = () => {
       playerCards.appendChild(hitCard);
       playerCardNum += newCard.amt;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
-      if (playerCardNum > 21) {
-        hide(hit);
-        hide(stand);
-        hitCard = '';
-        newCard = '';
-        console.log(`${playerCardNum} after busting`);
-        playerCardNum = 0;
-        playerBank -= betNum;
-        dealerBank += betNum;
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-        phaseHeader[1].innerHTML = 'You Busted';
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 3000);
-        }
-      }
+      overTwentyOne();
     });
 
     // stand dealer functionality
@@ -571,13 +577,12 @@ const initialize = () => {
         dealerCards.append(dealCard);
       }
 
+      dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       if (dealerCardNum === playerCardNum) {
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-        phaseHeader[1].innerHTML = `You and the dealer had the same. Push.`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
           getWinner();
@@ -590,7 +595,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (dealerCardNum === 21 && playerCardNum != 21) {
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
         dealerBank += betNum;
@@ -610,7 +614,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (playerCardNum === 21 && dealerCardNum != 21) {
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
         dealerBank -= betNum * 2;
@@ -630,7 +633,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (dealerCardNum > 21) {
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
         dealerBank -= betNum;
@@ -650,7 +652,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (playerCardNum > dealerCardNum) {
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
         dealerCardNum = 0;
         playerCardNum = 0;
         dealerBank -= betNum;
@@ -670,9 +671,6 @@ const initialize = () => {
           }, 3000);
         }
       } else if (dealerCardNum > playerCardNum) {
-        dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
-        dealerCardNum = 0;
-        playerCardNum = 0;
         dealerBank += betNum;
         playerBank -= betNum;
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
@@ -690,6 +688,7 @@ const initialize = () => {
           }, 3000);
         }
       }
+
       betNum = 0;
     });
   };

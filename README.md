@@ -2,7 +2,10 @@
 
 Blackjack is a betting card game where a player tries to get as close to 21 without going over.
 
-(Screenshots once closer to complete)
+![phase1](./images/phase1.png)
+![phase2](./images/phase2.png)
+![phase3](./images/phase3.png)
+![phase4](./images/phase4.png)
 
 ## Technology Used:
 
