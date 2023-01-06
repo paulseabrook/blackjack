@@ -122,14 +122,26 @@ body {
 }
 
 #play {
-  outline: var(--main-red) solid;
-  padding: 20px;
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
   border-radius: 5px;
 }
 
 .play-again {
-  outline: var(--main-red) solid;
-  padding: 20px;
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
   border-radius: 5px;
 }
 
@@ -139,7 +151,6 @@ body {
 }
 
 #play:active {
-  outline: solid red;
   background-color: rgba(1, 1, 1, 0.785);
 }
 
@@ -149,12 +160,16 @@ body {
 }
 
 .game-button {
-  outline: var(--main-red) solid;
-  margin-left: 15px;
-  border-radius: 5px;
-  padding: 10px 20px;
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 15px 32px;
   text-align: center;
-  align-items: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .game-button:hover {
@@ -163,7 +178,6 @@ body {
 }
 
 .game-button:active {
-  outline: solid red;
   background-color: rgba(1, 1, 1, 0.785);
 }
 
@@ -190,5 +204,4 @@ body {
   text-align: center;
   outline: solid var(--main-red);
   color: var(--main-green);
-  transform: rotateY(180deg);
 }
