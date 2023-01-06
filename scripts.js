@@ -438,9 +438,10 @@ const initialize = () => {
       hide(containerTwo);
       removeHide(containerFour);
       return;
-    }, 2);
+    }, 2500);
   };
 
+  // fucntionality for when player goes over 21 on a "hit" or "deal" in a rare case.
   const overTwentyOne = () => {
     if (playerCardNum > 21) {
       hit.style.display = 'none';
@@ -499,7 +500,7 @@ const initialize = () => {
 
     deal.addEventListener('click', () => {
       if (betNum > dealerBank) {
-        betMsg.innerHTML = 'The dealer does not have enough';
+        betMsg.innerHTML = 'The dealer does not have enoug.';
         return;
       }
       hit.style.display = 'flex';
