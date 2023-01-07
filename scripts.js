@@ -412,8 +412,8 @@ const initialize = () => {
     hide(betMsg);
     removeHide(phaseHeader[1]);
     hide(containerThree);
-
     removeHide(containerTwo);
+
     bottomTwo.style.display = 'none';
     topTwo.style.display = 'none';
 
@@ -432,11 +432,13 @@ const initialize = () => {
       containerFour.appendChild(playerBankDiv);
       containerFour.appendChild(dealerBankDiv);
       containerFour.appendChild(playAgain);
+
       hide(betMsg);
       removeHide(phaseHeader[1]);
       hide(containerThree);
       hide(containerTwo);
       removeHide(containerFour);
+
       return;
     }, 2500);
   };
@@ -446,13 +448,18 @@ const initialize = () => {
     if (playerCardNum > 21) {
       hit.style.display = 'none';
       stand.style.display = 'none';
+
       hitCard = '';
       newCard = '';
+
       playerCardNum = 0;
+
       playerBank -= betNum;
       dealerBank += betNum;
+
       playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
       dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
       phaseHeader[1].innerHTML = 'You Busted';
 
       if (playerBank <= 0 || dealerBank <= 0) {
@@ -471,10 +478,13 @@ const initialize = () => {
   const render = () => {
     removeAllChildNodes(dealerCards);
     removeAllChildNodes(playerCards);
+
     playerCardNum = 0;
     dealerCardNum = 0;
+
     playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
     dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
     hide(containerOne);
     hide(containerThree);
     removeHide(containerTwo);
@@ -484,7 +494,9 @@ const initialize = () => {
     bet.addEventListener('click', () => {
       playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
       dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
       hide(phaseHeader[1]);
+
       betNum = Math.abs(parseFloat(betAmt.value));
       if (!Number.isInteger(betNum) || betNum === 0 || betNum === NaN) {
         betMsg.innerHTML = 'Please bet a whole number.';
@@ -494,6 +506,7 @@ const initialize = () => {
         betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
         deal.style.visibility = 'visible';
       }
+
       removeHide(betMsg);
     });
 
@@ -502,8 +515,10 @@ const initialize = () => {
         betMsg.innerHTML = 'The dealer does not have enough.';
         return;
       }
+
       hit.style.display = 'flex';
       stand.style.display = 'flex';
+
       reDeck(cards);
 
       hide(containerTwo);
@@ -523,7 +538,9 @@ const initialize = () => {
       dealerCards.appendChild(dealerCardTwo);
       playerCards.appendChild(playerCardOne);
       playerCards.appendChild(playerCardTwo);
+
       dealerCardOne.classList.add('hidden');
+
       cardOne = cards.shift();
       reDeck(cards);
       cardTwo = cards.shift();
@@ -532,16 +549,20 @@ const initialize = () => {
       reDeck(cards);
       cardFour = cards.shift();
       reDeck(cards);
+
       playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`;
       playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`;
       playerCardNum = cardOne.amt + cardTwo.amt;
       dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`;
       dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
       dealerCardNum = cardFour.amt;
+
       hit.innerHTML = 'Hit';
       stand.innerHTML = 'Stand';
+
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
+
       overTwentyOne();
     });
 
@@ -549,12 +570,16 @@ const initialize = () => {
     hit.addEventListener('click', () => {
       let hitCard = document.createElement('div');
       let newCard = cards.shift();
+
       reDeck(cards);
+
       hitCard.classList.add('cards');
       hitCard.innerHTML = `${newCard.name} ${newCard.emj}`;
+
       playerCards.appendChild(hitCard);
       playerCardNum += newCard.amt;
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
+
       overTwentyOne();
     });
 
@@ -562,6 +587,7 @@ const initialize = () => {
     stand.addEventListener('click', () => {
       hit.style.display = 'none';
       stand.style.display = 'none';
+
       dealerCardNum = cardThree.amt + cardFour.amt;
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       dealerCardOne.classList.remove('hidden');
@@ -575,13 +601,16 @@ const initialize = () => {
         dealCard.innerHTML = `${newDealCard.name} ${newDealCard.emj}`;
         dealerCards.append(dealCard);
       }
+
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
 
       if (dealerCardNum === playerCardNum) {
         dealerCardNum = 0;
         playerCardNum = 0;
+
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
         phaseHeader[1].innerHTML = `Push`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -597,10 +626,13 @@ const initialize = () => {
       } else if (dealerCardNum === 21 && playerCardNum != 21) {
         dealerCardNum = 0;
         playerCardNum = 0;
+
         dealerBank += betNum;
         playerBank -= betNum;
+
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
         phaseHeader[1].innerHTML = `The dealer won that hand with 21`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -616,10 +648,13 @@ const initialize = () => {
       } else if (playerCardNum === 21 && dealerCardNum != 21) {
         dealerCardNum = 0;
         playerCardNum = 0;
+
         dealerBank -= betNum * 2;
         playerBank += betNum * 2;
+
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
         phaseHeader[1].innerHTML = `You got Blackjack!`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -635,10 +670,13 @@ const initialize = () => {
       } else if (dealerCardNum > 21) {
         dealerCardNum = 0;
         playerCardNum = 0;
+
         dealerBank -= betNum;
         playerBank += betNum;
+
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
         phaseHeader[1].innerHTML = `Dealer busted! You won that hand!`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -654,10 +692,13 @@ const initialize = () => {
       } else if (playerCardNum > dealerCardNum) {
         dealerCardNum = 0;
         playerCardNum = 0;
+
         dealerBank -= betNum;
         playerBank += betNum;
+
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
         phaseHeader[1].innerHTML = `You won that hand!`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -673,10 +714,13 @@ const initialize = () => {
       } else if (dealerCardNum > playerCardNum) {
         dealerCardNum = 0;
         playerCardNum = 0;
+
         dealerBank += betNum;
         playerBank -= betNum;
+
         playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+
         phaseHeader[1].innerHTML = `The dealer won that hand.`;
 
         if (playerBank <= 0 || dealerBank <= 0) {
@@ -716,14 +760,15 @@ const removeHide = (element) => {
 
 // https://stackoverflow.com/questions/49555273/how-to-shuffle-an-array-of-objects-in-javascript
 // Fisher-Yates Algorithm
-function shuffleFisherYates(array) {
+
+const shuffleFisherYates = (array) => {
   let i = array.length;
   while (i--) {
     const ri = Math.floor(Math.random() * i);
     [array[i], array[ri]] = [array[ri], array[i]];
   }
   return array;
-}
+};
 
 // If the cards run out, put them back into the deck and shuffle them.
 const reDeck = (deck) => {
@@ -1050,4 +1095,5 @@ const reDeck = (deck) => {
   }
 };
 
+// event listener for initial play button
 playButton.addEventListener('click', initialize);
