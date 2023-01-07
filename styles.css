@@ -38,7 +38,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 #phase-two-mid {
@@ -49,6 +49,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  font-size: 20px;
 }
 
 .phase-three-container {
@@ -74,6 +75,7 @@ body {
   justify-content: space-around;
   min-height: 100vh;
   width: 100%;
+  font-size: 20px;
 }
 
 .phase-three-cards {
@@ -195,12 +197,11 @@ body {
 }
 
 .hidden {
-  opacity: 0%;
   font-size: 17px;
   padding: 20px;
   height: 20vh;
   width: 15vh;
   text-align: center;
-  outline: solid var(--main-red);
-  color: var(--main-green);
+  color: transparent;
+  background-color: rgba(1, 1, 1, 0.312);
 }

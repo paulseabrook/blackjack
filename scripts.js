@@ -344,7 +344,6 @@ let cards = [
   },
 ];
 
-// functionality //
 const initialize = () => {
   playerBank = 20;
   dealerBank = 20;
@@ -386,6 +385,7 @@ const initialize = () => {
   playAgain.classList.add('play-again');
   playAgain.classList.add('game-button');
 
+  // append children
   midTwo.appendChild(betMsg);
   topTwo.appendChild(dealerBankDiv);
   bottomTwo.prepend(playerBankDiv);
@@ -407,7 +407,7 @@ const initialize = () => {
     window.location.reload();
   });
 
-  // function for when player or dealer run out of money, move to phase 4
+  // function for when player or dealer run out of money
   const getWinner = () => {
     hide(betMsg);
     removeHide(phaseHeader[1]);
@@ -421,10 +421,10 @@ const initialize = () => {
       if (playerBank <= 0) {
         phaseHeader[1].innerHTML = "You've run out of money. You lose.";
         playerBankDiv.innerHTML = `Player Bank: $0.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
+        dealerBankDiv.innerHTML = `Dealer Bank: $40.00`;
       } else if (dealerBank <= 0) {
         phaseHeader[1].innerHTML = 'You win Blackjack!';
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
+        playerBankDiv.innerHTML = `Player Bank: $40.00`;
         dealerBankDiv.innerHTML = `Dealer Bank: $0.00`;
       }
 
@@ -441,14 +441,13 @@ const initialize = () => {
     }, 2500);
   };
 
-  // fucntionality for when player goes over 21 on a "hit" or "deal" in a rare case.
+  // functionality for when player goes over 21 on a "hit" or "deal" in a rare case.
   const overTwentyOne = () => {
     if (playerCardNum > 21) {
       hit.style.display = 'none';
       stand.style.display = 'none';
       hitCard = '';
       newCard = '';
-      console.log(`${playerCardNum} after busting`);
       playerCardNum = 0;
       playerBank -= betNum;
       dealerBank += betNum;
@@ -500,7 +499,7 @@ const initialize = () => {
 
     deal.addEventListener('click', () => {
       if (betNum > dealerBank) {
-        betMsg.innerHTML = 'The dealer does not have enoug.';
+        betMsg.innerHTML = 'The dealer does not have enough.';
         return;
       }
       hit.style.display = 'flex';
@@ -576,8 +575,8 @@ const initialize = () => {
         dealCard.innerHTML = `${newDealCard.name} ${newDealCard.emj}`;
         dealerCards.append(dealCard);
       }
-
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
+
       if (dealerCardNum === playerCardNum) {
         dealerCardNum = 0;
         playerCardNum = 0;

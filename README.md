@@ -4,7 +4,10 @@ Blackjack is a card game where both the dealer and the player are dealt a hand o
 
 ---
 
-// screenshots here
+![phase1](./images/phase1.png)
+![phase2](./images/phase2.png)
+![phase3](./images/phase3.png)
+![phase4](./images/phase4.png)
 
 ## Technology Used:
 
@@ -51,7 +54,7 @@ To play this game live you can click this [link](https://paulseabrook.github.io/
 
 ### Version 2:
 
-- As a user, I want aces to be equal to 1 or 11 depending on the situation
+- As a user, I want aces to be equal to 1 or 11 depending on the situation.
 - As a user, I want to see better UX/UI design. (setTimeouts, css transitions, css transforms).
 - As a user, I want to be able to pick my theme.
 - As a user, I want to be able to choose how much money myself and the dealer start with.
