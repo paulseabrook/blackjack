@@ -1,6 +1,6 @@
 # Blackjack
 
-Blackjack is a card game where both the dealer and the player are dealt a hand of cards and the player bets against the dealer. Whoever gets closest to 21 without going over wins the pot.
+Blackjack is a card game where both the dealer and the player are dealt a hand of cards and the player bets against the dealer. Both the player and the dealer receive cards and whoever gets closest to 21 without going over wins the pot.
 
 ---
 
@@ -29,6 +29,8 @@ To play this game live you can click this [link](https://paulseabrook.github.io/
 
 - For this initial version, aces will consistently be worth 11.
 - Player and dealer banks start at $20.00.
+- Click the "Hit" button to receive a card.
+- "Stand" signifies that you are through receiving cards.
 - The player or dealer wins if they have a hand that is greater than the other or if the other busts and goes over 21.
 - If both players have the same number, they will push and the player and dealer banks will remain the same.
 - The dealer stops receiving cards once they have a "Dealer Card" amount that is greater than 16.

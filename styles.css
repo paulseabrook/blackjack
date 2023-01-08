@@ -4,6 +4,8 @@
   --main-green: rgb(1, 107, 1);
   --main-white: rgb(209, 240, 199);
   --main-red: rgb(150, 54, 54);
+  --main-hover: rgba(1, 1, 1, 0.312);
+  --main-active: rgba(1, 1, 1, 0.785);
 }
 
 * {
@@ -148,12 +150,12 @@ body {
 }
 
 #play:hover {
-  background-color: rgba(1, 1, 1, 0.312);
+  background-color: var(--main-hover);
   cursor: pointer;
 }
 
 #play:active {
-  background-color: rgba(1, 1, 1, 0.785);
+  background-color: var(--main-active);
 }
 
 .hide {
@@ -174,12 +176,12 @@ body {
 }
 
 .game-button:hover {
-  background-color: rgba(1, 1, 1, 0.312);
+  background-color: var(--main-hover);
   cursor: pointer;
 }
 
 .game-button:active {
-  background-color: rgba(1, 1, 1, 0.785);
+  background-color: var(--main-active);
 }
 
 #bet-form {
@@ -203,5 +205,5 @@ body {
   width: 15vh;
   text-align: center;
   color: transparent;
-  background-color: rgba(1, 1, 1, 0.312);
+  background-color: var(--main-hover);
 }
