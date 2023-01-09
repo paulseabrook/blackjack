@@ -27,8 +27,9 @@ To play this game live you can click this [link](https://paulseabrook.github.io/
 
 ### Game Rules
 
-- For this initial version, aces will consistently be worth 11.
+- For this initial version, aces will consistently be worth 11. Jack, Queen, King are worth 10.
 - Player and dealer banks start at $20.00.
+- When dealt a hand of cards, each card is worth a specifc number.
 - Click the "Hit" button to receive a card.
 - "Stand" signifies that you are through receiving cards.
 - The player or dealer wins if they have a hand that is greater than the other or if the other busts and goes over 21.
