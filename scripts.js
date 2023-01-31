@@ -1,10 +1,13 @@
 // variables for accessing DOM //
+// remove unused `body` const, Also selecting the entire `body` is not the best way to go about things. If you are finding yourself needing to select the entire `body` there might be a better way of doing what you need to do.
 const body = document.querySelector('body');
 const phaseHeader = document.querySelectorAll('.phase-header');
 const playButton = document.querySelector('#play');
+// Name these better. I get that they are containers and they are 3 but what are their contents?
 const containerOne = document.querySelector('.phase-one-container');
 const containerTwo = document.querySelector('.phase-two-container');
 const containerThree = document.querySelector('.phase-three-container');
+// remove back ticks from around class name and replace with single quotes
 const topTwo = document.querySelector(`#phase-two-top`);
 const midTwo = document.querySelector('#phase-two-mid');
 const bottomTwo = document.querySelector('#phase-two-bottom');
@@ -13,6 +16,7 @@ const cardAmounts = document.querySelector('.card-amounts');
 const dealerCards = document.querySelector('.dealer-cards');
 const playerCards = document.querySelector('.player-cards');
 const hitStand = document.querySelector('.hit-stand');
+// Same comment as above. Name this better. What are the contents?
 const containerFour = document.querySelector('.phase-four-container');
 
 // data structures //
@@ -345,399 +349,412 @@ let cards = [
 ];
 
 const initialize = () => {
-  playerBank = 20;
-  dealerBank = 20;
-
-  shuffleFisherYates(cards);
-
-  // create our divs
-  const playerBankDiv = document.createElement('div');
-  const dealerBankDiv = document.createElement('div');
-  const bet = document.createElement('div');
-  const betAmt = document.createElement('input');
-  const deal = document.createElement('div');
-  const betMsg = document.createElement('p');
-  const dealerCardAmount = document.createElement('div');
-  const playerCardAmount = document.createElement('div');
-  const dealerCardOne = document.createElement('div');
-  const dealerCardTwo = document.createElement('div');
-  const hit = document.createElement('div');
-  const stand = document.createElement('div');
-  const playerCardOne = document.createElement('div');
-  const playerCardTwo = document.createElement('div');
-  const playAgain = document.createElement('div');
-
-  bet.innerHTML = `Bet`;
-  deal.innerHTML = 'Deal';
-
-  betAmt.setAttribute('type', 'number');
-
-  // add classLists
-  betAmt.classList.add('bet-amount');
-  bet.classList.add('game-button');
-  deal.classList.add('game-button');
-  dealerCardOne.classList.add('cards');
-  playerCardOne.classList.add('cards');
-  dealerCardTwo.classList.add('cards');
-  playerCardTwo.classList.add('cards');
-  hit.classList.add('game-button');
-  stand.classList.add('game-button');
-  playAgain.classList.add('play-again');
-  playAgain.classList.add('game-button');
-
-  // append children
-  midTwo.appendChild(betMsg);
-  topTwo.appendChild(dealerBankDiv);
-  bottomTwo.prepend(playerBankDiv);
-  betForm.append(bet);
-  betForm.append(betAmt);
-  bottomTwo.append(deal);
-  cardAmounts.appendChild(dealerCardAmount);
-  cardAmounts.appendChild(playerCardAmount);
-  dealerCards.appendChild(dealerCardOne);
-  dealerCards.appendChild(dealerCardTwo);
-  playerCards.appendChild(playerCardOne);
-  playerCards.appendChild(playerCardTwo);
-  hitStand.appendChild(hit);
-  hitStand.appendChild(stand);
-
-  // play again button for phase 4
-  playAgain.innerHTML = 'Play Again';
-  playAgain.addEventListener('click', () => {
-    window.location.reload();
-  });
-
-  // function for when player or dealer run out of money
-  const getWinner = () => {
-    hide(betMsg);
-    removeHide(phaseHeader[1]);
-    hide(containerThree);
-    removeHide(containerTwo);
-
-    bottomTwo.style.display = 'none';
-    topTwo.style.display = 'none';
-
-    setTimeout(() => {
-      if (playerBank <= 0) {
-        phaseHeader[1].innerHTML = "You've run out of money. You lose.";
-        playerBankDiv.innerHTML = `Player Bank: $0.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $40.00`;
-      } else if (dealerBank <= 0) {
-        phaseHeader[1].innerHTML = 'You win Blackjack!';
-        playerBankDiv.innerHTML = `Player Bank: $40.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $0.00`;
-      }
-
-      containerFour.appendChild(phaseHeader[1]);
-      containerFour.appendChild(playerBankDiv);
-      containerFour.appendChild(dealerBankDiv);
-      containerFour.appendChild(playAgain);
-
-      hide(betMsg);
-      removeHide(phaseHeader[1]);
-      hide(containerThree);
-      hide(containerTwo);
-      removeHide(containerFour);
-
-      return;
-    }, 2500);
-  };
-
-  // functionality for when player goes over 21 on a "hit" or "deal" in a rare case.
-  const overTwentyOne = () => {
-    if (playerCardNum > 21) {
-      hit.style.display = 'none';
-      stand.style.display = 'none';
-
-      hitCard = '';
-      newCard = '';
-
-      playerCardNum = 0;
-
-      playerBank -= betNum;
-      dealerBank += betNum;
-
-      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-      phaseHeader[1].innerHTML = 'You Busted';
-
-      if (playerBank <= 0 || dealerBank <= 0) {
-        getWinner();
-      } else {
-        setTimeout(() => {
-          hide(betMsg);
-          removeHide(phaseHeader[1]);
-          hide(containerThree);
-          removeHide(containerTwo);
-        }, 2500);
-      }
-    }
-  };
-
-  const render = () => {
-    removeAllChildNodes(dealerCards);
-    removeAllChildNodes(playerCards);
-
-    playerCardNum = 0;
-    dealerCardNum = 0;
-
-    playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-    dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-    hide(containerOne);
-    hide(containerThree);
-    removeHide(containerTwo);
-
-    deal.style.visibility = 'hidden';
-
-    bet.addEventListener('click', () => {
-      playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-      dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-      hide(phaseHeader[1]);
-
-      betNum = Math.abs(parseFloat(betAmt.value));
-      if (!Number.isInteger(betNum) || betNum === 0 || betNum === NaN) {
-        betMsg.innerHTML = 'Please bet a whole number.';
-      } else if (betNum > playerBank) {
-        betMsg.innerHTML = "Woah there! You don't have enough money!";
-      } else {
-        betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`;
-        deal.style.visibility = 'visible';
-      }
-
-      removeHide(betMsg);
-    });
-
-    deal.addEventListener('click', () => {
-      if (betNum > dealerBank) {
-        betMsg.innerHTML = 'The dealer does not have enough.';
-        return;
-      }
-
-      hit.style.display = 'flex';
-      stand.style.display = 'flex';
-
-      reDeck(cards);
-
-      hide(containerTwo);
-      removeHide(containerThree);
-      removeHide(hit);
-      removeHide(stand);
-
-      while (dealerCards.firstChild) {
-        dealerCards.removeChild(dealerCards.firstChild);
-      }
-
-      while (playerCards.firstChild) {
-        playerCards.removeChild(playerCards.firstChild);
-      }
-
-      dealerCards.appendChild(dealerCardOne);
-      dealerCards.appendChild(dealerCardTwo);
-      playerCards.appendChild(playerCardOne);
-      playerCards.appendChild(playerCardTwo);
-
-      dealerCardOne.classList.add('hidden');
-
-      cardOne = cards.shift();
-      reDeck(cards);
-      cardTwo = cards.shift();
-      reDeck(cards);
-      cardThree = cards.shift();
-      reDeck(cards);
-      cardFour = cards.shift();
-      reDeck(cards);
-
-      playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`;
-      playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`;
-      playerCardNum = cardOne.amt + cardTwo.amt;
-      dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`;
-      dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
-      dealerCardNum = cardFour.amt;
-
-      hit.innerHTML = 'Hit';
-      stand.innerHTML = 'Stand';
-
-      dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
-      playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
-
-      overTwentyOne();
-    });
-
-    // hit player functionality
-    hit.addEventListener('click', () => {
-      let hitCard = document.createElement('div');
-      let newCard = cards.shift();
-
-      reDeck(cards);
-
-      hitCard.classList.add('cards');
-      hitCard.innerHTML = `${newCard.name} ${newCard.emj}`;
-
-      playerCards.appendChild(hitCard);
-      playerCardNum += newCard.amt;
-      playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
-
-      overTwentyOne();
-    });
-
-    // stand dealer functionality
-    stand.addEventListener('click', () => {
-      hit.style.display = 'none';
-      stand.style.display = 'none';
-
-      dealerCardNum = cardThree.amt + cardFour.amt;
-      dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
-      dealerCardOne.classList.remove('hidden');
-
-      while (dealerCardNum < 17) {
-        let newDealCard = cards.shift();
-        reDeck(cards);
-        dealerCardNum += newDealCard.amt;
-        let dealCard = document.createElement('div');
-        dealCard.classList.add('cards');
-        dealCard.innerHTML = `${newDealCard.name} ${newDealCard.emj}`;
-        dealerCards.append(dealCard);
-      }
-
-      dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
-
-      if (dealerCardNum === playerCardNum) {
-        dealerCardNum = 0;
-        playerCardNum = 0;
-
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-        phaseHeader[1].innerHTML = `Push`;
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2500);
-        }
-      } else if (dealerCardNum === 21 && playerCardNum != 21) {
-        dealerCardNum = 0;
-        playerCardNum = 0;
-
-        dealerBank += betNum;
-        playerBank -= betNum;
-
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-        phaseHeader[1].innerHTML = `The dealer won that hand with 21`;
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2500);
-        }
-      } else if (playerCardNum === 21 && dealerCardNum != 21) {
-        dealerCardNum = 0;
-        playerCardNum = 0;
-
-        dealerBank -= betNum * 2;
-        playerBank += betNum * 2;
-
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-        phaseHeader[1].innerHTML = `You got Blackjack!`;
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2500);
-        }
-      } else if (dealerCardNum > 21) {
-        dealerCardNum = 0;
-        playerCardNum = 0;
-
-        dealerBank -= betNum;
-        playerBank += betNum;
-
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-        phaseHeader[1].innerHTML = `Dealer busted! You won that hand!`;
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2500);
-        }
-      } else if (playerCardNum > dealerCardNum) {
-        dealerCardNum = 0;
-        playerCardNum = 0;
-
-        dealerBank -= betNum;
-        playerBank += betNum;
-
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-        phaseHeader[1].innerHTML = `You won that hand!`;
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2500);
-        }
-      } else if (dealerCardNum > playerCardNum) {
-        dealerCardNum = 0;
-        playerCardNum = 0;
-
-        dealerBank += betNum;
-        playerBank -= betNum;
-
-        playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`;
-        dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`;
-
-        phaseHeader[1].innerHTML = `The dealer won that hand.`;
-
-        if (playerBank <= 0 || dealerBank <= 0) {
-          getWinner();
-        } else {
-          setTimeout(() => {
-            hide(betMsg);
-            removeHide(phaseHeader[1]);
-            hide(containerThree);
-            removeHide(containerTwo);
-          }, 2500);
-        }
-      }
-      betNum = 0;
-    });
-  };
-  render();
+	// Magic numbers should be declared at the top of the file and be named in all caps.
+	// (somewhere at the top of this file)
+	// const PLAYER_BANK = 20
+	// (back down here)
+	// playerBank = PLAYER_BANK
+	// or just in this function scope where you have playerBank change it to PLAYER_BANK.
+	// same thing goes for dealerBank
+	playerBank = 20
+	dealerBank = 20
+
+	shuffleFisherYates(cards)
+
+	// create our divs
+  // good naming here. Clear on what each element was going to be for
+	const playerBankDiv = document.createElement('div')
+	const dealerBankDiv = document.createElement('div')
+	const bet = document.createElement('div')
+	const betAmt = document.createElement('input')
+	const deal = document.createElement('div')
+	const betMsg = document.createElement('p')
+	const dealerCardAmount = document.createElement('div')
+	const playerCardAmount = document.createElement('div')
+	const dealerCardOne = document.createElement('div')
+	const dealerCardTwo = document.createElement('div')
+	const hit = document.createElement('div')
+	const stand = document.createElement('div')
+	const playerCardOne = document.createElement('div')
+	const playerCardTwo = document.createElement('div')
+	const playAgain = document.createElement('div')
+
+	bet.innerHTML = `Bet`
+	deal.innerHTML = 'Deal'
+
+	betAmt.setAttribute('type', 'number')
+
+	// add classLists
+	betAmt.classList.add('bet-amount')
+	bet.classList.add('game-button')
+	deal.classList.add('game-button')
+	dealerCardOne.classList.add('cards')
+	playerCardOne.classList.add('cards')
+	dealerCardTwo.classList.add('cards')
+	playerCardTwo.classList.add('cards')
+	hit.classList.add('game-button')
+	stand.classList.add('game-button')
+	playAgain.classList.add('play-again')
+	playAgain.classList.add('game-button')
+
+	// append children
+	midTwo.appendChild(betMsg)
+	topTwo.appendChild(dealerBankDiv)
+	bottomTwo.prepend(playerBankDiv)
+	betForm.append(bet)
+	betForm.append(betAmt)
+	bottomTwo.append(deal)
+	cardAmounts.appendChild(dealerCardAmount)
+	cardAmounts.appendChild(playerCardAmount)
+	dealerCards.appendChild(dealerCardOne)
+	dealerCards.appendChild(dealerCardTwo)
+	playerCards.appendChild(playerCardOne)
+	playerCards.appendChild(playerCardTwo)
+	hitStand.appendChild(hit)
+	hitStand.appendChild(stand)
+
+	// play again button for phase 4
+	playAgain.innerHTML = 'Play Again'
+	playAgain.addEventListener('click', () => {
+		window.location.reload()
+	})
+
+	// function for when player or dealer run out of money
+	const getWinner = () => {
+    // wonderful job on making reusable functions
+		hide(betMsg)
+		removeHide(phaseHeader[1])
+		hide(containerThree)
+		removeHide(containerTwo)
+
+		bottomTwo.style.display = 'none'
+		topTwo.style.display = 'none'
+
+		setTimeout(() => {
+			if (playerBank <= 0) {
+				phaseHeader[1].innerHTML = "You've run out of money. You lose."
+				playerBankDiv.innerHTML = `Player Bank: $0.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $40.00`
+			} else if (dealerBank <= 0) {
+				phaseHeader[1].innerHTML = 'You win Blackjack!'
+				playerBankDiv.innerHTML = `Player Bank: $40.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $0.00`
+			}
+
+			containerFour.appendChild(phaseHeader[1])
+			containerFour.appendChild(playerBankDiv)
+			containerFour.appendChild(dealerBankDiv)
+			containerFour.appendChild(playAgain)
+
+			hide(betMsg)
+			removeHide(phaseHeader[1])
+			hide(containerThree)
+			hide(containerTwo)
+			removeHide(containerFour)
+
+			return
+		}, 2500)
+	}
+
+	// functionality for when player goes over 21 on a "hit" or "deal" in a rare case.
+	const overTwentyOne = () => {
+		if (playerCardNum > 21) {
+			hit.style.display = 'none'
+			stand.style.display = 'none'
+
+			hitCard = ''
+			newCard = ''
+
+			playerCardNum = 0
+
+			playerBank -= betNum
+			dealerBank += betNum
+
+			playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+			dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+			phaseHeader[1].innerHTML = 'You Busted'
+
+			if (playerBank <= 0 || dealerBank <= 0) {
+				getWinner()
+			} else {
+				setTimeout(() => {
+					hide(betMsg)
+					removeHide(phaseHeader[1])
+					hide(containerThree)
+					removeHide(containerTwo)
+				}, 2500)
+			}
+		}
+	}
+
+	const render = () => {
+		removeAllChildNodes(dealerCards)
+		removeAllChildNodes(playerCards)
+
+		playerCardNum = 0
+		dealerCardNum = 0
+
+		playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+		dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+		hide(containerOne)
+		hide(containerThree)
+		removeHide(containerTwo)
+
+		deal.style.visibility = 'hidden'
+
+		bet.addEventListener('click', () => {
+			playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+			dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+			hide(phaseHeader[1])
+
+			betNum = Math.abs(parseFloat(betAmt.value))
+			// this if check is not human readable. Save it to a variable that has a meaningful name then pass it to the if check
+			// const isBetAValidNumber = !Number.isInteger(betNum) || betNum === 0 || betNum === NaN
+			// if (isBetAValidNumber) {
+      // this way I know what is being checked here with a glance
+			if (!Number.isInteger(betNum) || betNum === 0 || betNum === NaN) {
+				betMsg.innerHTML = 'Please bet a whole number.'
+			} else if (betNum > playerBank) {
+				betMsg.innerHTML = "Woah there! You don't have enough money!"
+			} else {
+				betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`
+				deal.style.visibility = 'visible'
+			}
+
+			removeHide(betMsg)
+		})
+
+		deal.addEventListener('click', () => {
+			if (betNum > dealerBank) {
+				betMsg.innerHTML = 'The dealer does not have enough.'
+				return
+			}
+
+			hit.style.display = 'flex'
+			stand.style.display = 'flex'
+
+			reDeck(cards)
+
+			hide(containerTwo)
+			removeHide(containerThree)
+			removeHide(hit)
+			removeHide(stand)
+
+			while (dealerCards.firstChild) {
+				dealerCards.removeChild(dealerCards.firstChild)
+			}
+
+			while (playerCards.firstChild) {
+				playerCards.removeChild(playerCards.firstChild)
+			}
+
+			dealerCards.appendChild(dealerCardOne)
+			dealerCards.appendChild(dealerCardTwo)
+			playerCards.appendChild(playerCardOne)
+			playerCards.appendChild(playerCardTwo)
+
+			dealerCardOne.classList.add('hidden')
+
+			cardOne = cards.shift()
+			reDeck(cards)
+			cardTwo = cards.shift()
+			reDeck(cards)
+			cardThree = cards.shift()
+			reDeck(cards)
+			cardFour = cards.shift()
+			reDeck(cards)
+
+			playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`
+			playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`
+			playerCardNum = cardOne.amt + cardTwo.amt
+			dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`
+			dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`
+			dealerCardNum = cardFour.amt
+
+			hit.innerHTML = 'Hit'
+			stand.innerHTML = 'Stand'
+
+			dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`
+			playerCardAmount.innerHTML = `Player: ${playerCardNum}`
+
+			overTwentyOne()
+		})
+
+		// hit player functionality
+		hit.addEventListener('click', () => {
+			let hitCard = document.createElement('div')
+			let newCard = cards.shift()
+
+			reDeck(cards)
+
+			hitCard.classList.add('cards')
+			hitCard.innerHTML = `${newCard.name} ${newCard.emj}`
+
+			playerCards.appendChild(hitCard)
+			playerCardNum += newCard.amt
+			playerCardAmount.innerHTML = `Player: ${playerCardNum}`
+
+			overTwentyOne()
+		})
+
+		// stand dealer functionality
+		stand.addEventListener('click', () => {
+			hit.style.display = 'none'
+			stand.style.display = 'none'
+
+			dealerCardNum = cardThree.amt + cardFour.amt
+			dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`
+			dealerCardOne.classList.remove('hidden')
+
+			while (dealerCardNum < 17) {
+				let newDealCard = cards.shift()
+				reDeck(cards)
+				dealerCardNum += newDealCard.amt
+				let dealCard = document.createElement('div')
+				dealCard.classList.add('cards')
+				dealCard.innerHTML = `${newDealCard.name} ${newDealCard.emj}`
+				dealerCards.append(dealCard)
+			}
+
+			dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`
+
+			if (dealerCardNum === playerCardNum) {
+				dealerCardNum = 0
+				playerCardNum = 0
+
+				playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+				phaseHeader[1].innerHTML = `Push`
+
+				if (playerBank <= 0 || dealerBank <= 0) {
+					getWinner()
+				} else {
+					setTimeout(() => {
+						hide(betMsg)
+						removeHide(phaseHeader[1])
+						hide(containerThree)
+						removeHide(containerTwo)
+					}, 2500)
+				}
+			} else if (dealerCardNum === 21 && playerCardNum != 21) {
+				dealerCardNum = 0
+				playerCardNum = 0
+
+				dealerBank += betNum
+				playerBank -= betNum
+
+				playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+				phaseHeader[1].innerHTML = `The dealer won that hand with 21`
+
+				if (playerBank <= 0 || dealerBank <= 0) {
+					getWinner()
+				} else {
+					setTimeout(() => {
+						hide(betMsg)
+						removeHide(phaseHeader[1])
+						hide(containerThree)
+						removeHide(containerTwo)
+					}, 2500)
+				}
+			} else if (playerCardNum === 21 && dealerCardNum != 21) {
+				dealerCardNum = 0
+				playerCardNum = 0
+
+				dealerBank -= betNum * 2
+				playerBank += betNum * 2
+
+				playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+				phaseHeader[1].innerHTML = `You got Blackjack!`
+
+				if (playerBank <= 0 || dealerBank <= 0) {
+					getWinner()
+				} else {
+					setTimeout(() => {
+						hide(betMsg)
+						removeHide(phaseHeader[1])
+						hide(containerThree)
+						removeHide(containerTwo)
+					}, 2500)
+				}
+			} else if (dealerCardNum > 21) {
+				dealerCardNum = 0
+				playerCardNum = 0
+
+				dealerBank -= betNum
+				playerBank += betNum
+
+				playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+				phaseHeader[1].innerHTML = `Dealer busted! You won that hand!`
+
+				if (playerBank <= 0 || dealerBank <= 0) {
+					getWinner()
+				} else {
+					setTimeout(() => {
+						hide(betMsg)
+						removeHide(phaseHeader[1])
+						hide(containerThree)
+						removeHide(containerTwo)
+					}, 2500)
+				}
+			} else if (playerCardNum > dealerCardNum) {
+				dealerCardNum = 0
+				playerCardNum = 0
+
+				dealerBank -= betNum
+				playerBank += betNum
+
+				playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+				phaseHeader[1].innerHTML = `You won that hand!`
+
+				if (playerBank <= 0 || dealerBank <= 0) {
+					getWinner()
+				} else {
+					setTimeout(() => {
+						hide(betMsg)
+						removeHide(phaseHeader[1])
+						hide(containerThree)
+						removeHide(containerTwo)
+					}, 2500)
+				}
+			} else if (dealerCardNum > playerCardNum) {
+				dealerCardNum = 0
+				playerCardNum = 0
+
+				dealerBank += betNum
+				playerBank -= betNum
+
+				playerBankDiv.innerHTML = `Player Bank: $${playerBank}.00`
+				dealerBankDiv.innerHTML = `Dealer Bank: $${dealerBank}.00`
+
+				phaseHeader[1].innerHTML = `The dealer won that hand.`
+
+				if (playerBank <= 0 || dealerBank <= 0) {
+					getWinner()
+				} else {
+					setTimeout(() => {
+						hide(betMsg)
+						removeHide(phaseHeader[1])
+						hide(containerThree)
+						removeHide(containerTwo)
+					}, 2500)
+				}
+			}
+			betNum = 0
+		})
+	}
+	render()
 };
 
 // https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
