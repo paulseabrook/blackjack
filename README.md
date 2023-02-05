@@ -23,7 +23,7 @@ The following technology was used in order to create Blackjack:
 
 ---
 
-To play this game live you can click this [link](https://paulseabrook.github.io/project-1/)
+To play this game live you can click this [link](https://paulseabrook.github.io/blackjack/)
 
 ### Game Rules
 
