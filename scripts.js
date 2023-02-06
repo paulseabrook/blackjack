@@ -552,7 +552,7 @@ const initialize = () => {
 
       playerCardOne.innerHTML = `${cardOne.name} ${cardOne.emj}`;
       playerCardTwo.innerHTML = `${cardTwo.name} ${cardTwo.emj}`;
-      playerCardNum = cardOne.amt + cardTwo.amt;
+      playerCardNum = isAceDeal(cardOne.amt, cardTwo.amt);
       dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`;
       dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`;
       dealerCardNum = cardFour.amt;
@@ -577,7 +577,8 @@ const initialize = () => {
       hitCard.innerHTML = `${newCard.name} ${newCard.emj}`;
 
       playerCards.appendChild(hitCard);
-      playerCardNum += newCard.amt;
+
+      playerCardNum = isAceHit(playerCardNum, newCard.amt);
       playerCardAmount.innerHTML = `Player: ${playerCardNum}`;
 
       overTwentyOne();
@@ -588,14 +589,14 @@ const initialize = () => {
       hit.style.display = 'none';
       stand.style.display = 'none';
 
-      dealerCardNum = cardThree.amt + cardFour.amt;
+      dealerCardNum = isAceDeal(cardThree.amt, cardFour.amt);
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`;
       dealerCardOne.classList.remove('hidden');
 
       while (dealerCardNum < 17) {
         let newDealCard = cards.shift();
         reDeck(cards);
-        dealerCardNum += newDealCard.amt;
+        dealerCardNum = isAceDeal(dealerCardNum, newDealCard.amt);
         let dealCard = document.createElement('div');
         dealCard.classList.add('cards');
         dealCard.innerHTML = `${newDealCard.name} ${newDealCard.emj}`;
@@ -1093,6 +1094,26 @@ const reDeck = (deck) => {
     shuffleFisherYates(newDeck);
     cards = newDeck;
   }
+};
+
+// functionality for ace being 1 or 11 upon initial deal
+const isAceDeal = (cardOne, cardTwo) => {
+  if (cardOne + cardTwo > 21) {
+    if (cardOne == 11 || cardTwo == 11) {
+      return cardOne + cardTwo - 10;
+    }
+  }
+  return cardOne + cardTwo;
+};
+
+// functionality for ace being 1 or 11 upon hitting
+const isAceHit = (cardNum, newCard) => {
+  if (cardNum + newCard > 21) {
+    if (newCard == 11) {
+      return (cardNum += newCard - 10);
+    }
+  }
+  return (cardNum += newCard);
 };
 
 // event listener for initial play button
