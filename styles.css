@@ -106,12 +106,14 @@ body {
 .cards {
   font-size: 17px;
   padding: 20px;
-  height: 20vh;
-  width: 15vh;
+  height: 25vh;
+  width: 17vh;
   text-align: center;
   outline: solid var(--main-red);
   color: var(--main-green);
-  background: rgba(255, 250, 250, 0.843);
+  /* background: rgba(255, 250, 250, 0.843); */
+  background-size: cover;
+  border-radius: 10px;
 }
 
 .hit-stand {
