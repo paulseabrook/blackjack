@@ -58,7 +58,7 @@ To play this game live you can click this [link](https://paulseabrook.github.io/
 ### Version 2:
 
 - ~~As a user, I want aces to be equal to 1 or 11 depending on the situation.~~
-- As a user, I want to see better UX/UI design. (setTimeouts, css transitions, css transforms). potential for images: https://deckofcardsapi.com/
+- As a user, I want to see better UX/UI design. (setTimeouts, css transitions, css transforms). potential for images: https://deckofcardsapi.com/, https://www.dreamstime.com/photos-images/playing-card-back.html
 - As a user, I want to be able to pick my theme.
 - As a user, I want to be able to choose how much money myself and the dealer start with.
 - As a user, I want to be able to use buttons (chips) for quick selection of an amount to bet.

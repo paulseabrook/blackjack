@@ -426,6 +426,7 @@ const initialize = () => {
 
   // add classLists
   betAmt.classList.add('bet-amount')
+  betAmt.classList.add('form-control')
   bet.classList.add('game-button')
   deal.classList.add('game-button')
   dealerCardOne.classList.add('cards')
@@ -591,8 +592,6 @@ const initialize = () => {
       playerCards.appendChild(playerCardOne)
       playerCards.appendChild(playerCardTwo)
 
-      dealerCardOne.classList.add('hidden')
-
       cardOne = cards.shift()
       reDeck(cards)
       cardTwo = cards.shift()
@@ -609,8 +608,10 @@ const initialize = () => {
       // check if ace
       playerCardNum = isAceDeal(cardOne.amt, cardTwo.amt)
       // dealerCardOne.innerHTML = `${cardThree.name} ${cardThree.emj}`
-      dealerCardOne.style.backgroundImage = `url(${cardThree.img})`
+      dealerCardOne.classList.remove('cards')
+      dealerCardOne.style.backgroundImage = ''
       dealerCardOne.classList.add('hidden')
+
       // dealerCardTwo.innerHTML = `${cardFour.name} ${cardFour.emj}`
       dealerCardTwo.style.backgroundImage = `url(${cardFour.img})`
       dealerCardNum = cardFour.amt
@@ -649,8 +650,10 @@ const initialize = () => {
       stand.style.display = 'none'
 
       dealerCardNum = isAceDeal(cardThree.amt, cardFour.amt)
+      dealerCardOne.style.backgroundImage = `url(${cardThree.img})`
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`
       dealerCardOne.classList.remove('hidden')
+      dealerCardOne.classList.add('cards')
 
       while (dealerCardNum < 17) {
         let newDealCard = cards.shift()
@@ -841,78 +844,91 @@ const reDeck = (deck) => {
         name: 'two of hearts',
         amt: 2,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/2H.png',
       },
       {
         abr: '3h',
         name: 'three of hearts',
         amt: 3,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/3H.png',
       },
       {
         abr: '4h',
         name: 'four of hearts',
         amt: 4,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/4H.png',
       },
       {
         abr: '5h',
         name: 'five of hearts',
         amt: 5,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/5H.png',
       },
       {
         abr: '6h',
         name: 'six of hearts',
         amt: 6,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/6H.png',
       },
       {
         abr: '7h',
         name: 'seven of hearts',
         amt: 7,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/7H.png',
       },
       {
         abr: '8h',
         name: 'eight of hearts',
         amt: 8,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/8H.png',
       },
       {
         abr: '9h',
         name: 'nine of hearts',
         amt: 9,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/9H.png',
       },
       {
         abr: '10h',
         name: 'ten of hearts',
         amt: 10,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/0H.png',
       },
       {
         abr: 'jh',
         name: 'jack of hearts',
         amt: 10,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/JH.png',
       },
       {
         abr: 'qh',
         name: 'queen of hearts',
         amt: 10,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/QH.png',
       },
       {
         abr: 'kh',
         name: 'king of hearts',
         amt: 10,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/KH.png',
       },
       {
         abr: 'ah',
         name: 'ace of hearts',
         amt: 11,
         emj: '❤️',
+        img: 'https://deckofcardsapi.com/static/img/AH.png',
       },
 
       {
@@ -920,78 +936,91 @@ const reDeck = (deck) => {
         name: 'two of spades',
         amt: 2,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/2S.png',
       },
       {
         abr: '3s',
         name: 'three of spades',
         amt: 3,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/3S.png',
       },
       {
         abr: '4s',
         name: 'four of spades',
         amt: 4,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/4S.png',
       },
       {
         abr: '5s',
         name: 'five of spades',
         amt: 5,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/5S.png',
       },
       {
         abr: '6s',
         name: 'six of spades',
         amt: 6,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/6S.png',
       },
       {
         abr: '7s',
         name: 'seven of spades',
         amt: 7,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/7S.png',
       },
       {
         abr: '8s',
         name: 'eight of spades',
         amt: 8,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/8S.png',
       },
       {
         abr: '9s',
         name: 'nine of spades',
         amt: 9,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/9S.png',
       },
       {
         abr: '10s',
         name: 'ten of spades',
         amt: 10,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/0S.png',
       },
       {
         abr: 'js',
         name: 'jack of spades',
         amt: 10,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/JS.png',
       },
       {
         abr: 'qs',
         name: 'queen of spades',
         amt: 10,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/QS.png',
       },
       {
         abr: 'ks',
         name: 'king of spades',
         amt: 10,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/KS.png',
       },
       {
         abr: 'as',
         name: 'ace of spades',
         amt: 11,
         emj: '♠️',
+        img: 'https://deckofcardsapi.com/static/img/AS.png',
       },
 
       {
@@ -999,156 +1028,182 @@ const reDeck = (deck) => {
         name: 'two of clubs',
         amt: 2,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/2C.png',
       },
       {
         abr: '3c',
         name: 'three of clubs',
         amt: 3,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/3C.png',
       },
       {
         abr: '4c',
         name: 'four of clubs',
         amt: 4,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/4C.png',
       },
       {
         abr: '5c',
         name: 'five of clubs',
         amt: 5,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/5C.png',
       },
       {
         abr: '6c',
         name: 'six of clubs',
         amt: 6,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/6C.png',
       },
       {
         abr: '7c',
         name: 'seven of clubs',
         amt: 7,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/7C.png',
       },
       {
         abr: '8c',
         name: 'eight of clubs',
         amt: 8,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/8C.png',
       },
       {
         abr: '9c',
         name: 'nine of clubs',
         amt: 9,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/9C.png',
       },
       {
         abr: '10c',
         name: 'ten of clubs',
         amt: 10,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/0C.png',
       },
       {
         abr: 'jc',
         name: 'jack of clubs',
         amt: 10,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/JC.png',
       },
       {
         abr: 'qc',
         name: 'queen of clubs',
         amt: 10,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/QC.png',
       },
       {
         abr: 'kc',
         name: 'king of clubs',
         amt: 10,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/KC.png',
       },
       {
         abr: 'ac',
         name: 'ace of clubs',
         amt: 11,
         emj: '♣️',
+        img: 'https://deckofcardsapi.com/static/img/AC.png',
       },
       {
         abr: '2d',
         name: 'two of diamonds',
         amt: 2,
         emj: '♦️',
+        img: 'https://deckofcardsapi.com/static/img/2D.png',
       },
       {
         abr: '3d',
         name: 'three of diamonds',
         amt: 3,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/3D.png',
       },
       {
         abr: '4d',
         name: 'four of diamonds',
         amt: 4,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/4D.png',
       },
       {
         abr: '5d',
         name: 'five of diamonds',
         amt: 5,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/5D.png',
       },
       {
         abr: '6d',
         name: 'six of diamonds',
         amt: 6,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/6D.png',
       },
       {
         abr: '7d',
         name: 'seven of diamonds',
         amt: 7,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/7D.png',
       },
       {
         abr: '8d',
         name: 'eight of diamonds',
         amt: 8,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/8D.png',
       },
       {
         abr: '9d',
         name: 'nine of diamonds',
         amt: 9,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/9D.png',
       },
       {
         abr: '10d',
         name: 'ten of diamonds',
         amt: 10,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/0D.png',
       },
       {
         abr: 'jd',
         name: 'jack of diamonds',
         amt: 10,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/JD.png',
       },
       {
         abr: 'qd',
         name: 'queen of diamonds',
         amt: 10,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/QD.png',
       },
       {
         abr: 'kd',
         name: 'king of diamonds',
         amt: 10,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/KD.png',
       },
       {
         abr: 'ad',
         name: 'ace of diamonds',
         amt: 11,
         emj: '♦',
+        img: 'https://deckofcardsapi.com/static/img/AD.png',
       },
     ]
     shuffleFisherYates(newDeck)

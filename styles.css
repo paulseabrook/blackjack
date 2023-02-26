@@ -106,12 +106,10 @@ body {
 .cards {
   font-size: 17px;
   padding: 20px;
-  height: 25vh;
-  width: 17vh;
-  text-align: center;
+  height: 27vh;
+  width: 19vh;
   outline: solid var(--main-red);
   color: var(--main-green);
-  /* background: rgba(255, 250, 250, 0.843); */
   background-size: cover;
   border-radius: 10px;
 }
@@ -195,7 +193,8 @@ body {
 .bet-amount {
   border-radius: 5px;
   margin-left: 20px;
-  width: 10vh;
+  width: 15vh;
+  height: 4vh;
   color: black;
   background-color: var(--main-white);
 }
@@ -203,9 +202,14 @@ body {
 .hidden {
   font-size: 17px;
   padding: 20px;
-  height: 20vh;
-  width: 15vh;
+  height: 27vh;
+  width: 18vh;
   text-align: center;
-  color: transparent;
-  background-color: var(--main-hover);
+  background-size: cover;
+  background-image: url('/images/backOfCard.jpeg');
+  border-radius: 10px;
+}
+
+.hidden > * {
+  margin-top: -50px;
 }
