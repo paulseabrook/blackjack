@@ -396,6 +396,8 @@ let cards = [
   },
 ]
 
+console.log(phaseHeader)
+
 const initialize = () => {
   playerBank = 20
   dealerBank = 20
@@ -459,6 +461,8 @@ const initialize = () => {
   playAgain.addEventListener('click', () => {
     window.location.reload()
   })
+
+  phaseHeader[1].style.fontSize = '7em'
 
   // function for when player or dealer run out of money
   const getWinner = () => {
