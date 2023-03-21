@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&family=Catamaran&family=Lobster&display=swap');
 
 :root {
   --main-green: rgb(1, 107, 1);
@@ -10,7 +9,7 @@
 }
 
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Catamaran', sans-serif;
   margin: 0;
   color: var(--main-white);
 }
@@ -41,7 +40,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 35px;
 }
 
 #phase-two-mid {
@@ -52,7 +51,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .phase-three-container {
@@ -70,7 +69,9 @@ body {
   justify-content: space-evenly;
   min-height: 100vh;
   width: 100%;
+  font-size: 20px;
 }
+
 .card-amounts {
   display: flex;
   align-items: center;
@@ -88,6 +89,7 @@ body {
   justify-content: space-around;
   min-height: 100vh;
   width: 100%;
+  overflow: hidden;
 }
 
 .dealer-cards {
@@ -113,6 +115,9 @@ body {
   color: var(--main-green);
   background-size: cover;
   border-radius: 10px;
+  -webkit-animation: roll-in-right 1s ease-out both;
+  animation: roll-in-right 1s ease-out both;
+  overflow: hidden;
 }
 
 .hit-stand {
@@ -123,23 +128,25 @@ body {
 
 .phase-header {
   font-family: 'Lobster', cursive;
-  font-size: 10em;
+  font-size: 8em;
+  text-align: center;
 }
 
-/* .phase-header1 {
-  font-family: 'Lobster', cursive;
-  font-size: 5em;
-} */
+.bet-msg {
+  font-family: 'Cabin', sans-serif;
+  font-size: 2em;
+}
 
 #play {
   background-color: #d33a2f;
   border: none;
+  outline: solid rgba(245, 245, 245, 0.428) 2px;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 40px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 10px;
   -webkit-animation: heartbeat 8s ease-in-out infinite both;
   animation: heartbeat 8s ease-in-out infinite both;
@@ -148,12 +155,13 @@ body {
 .play-again {
   background-color: #d33a2f;
   border: none;
+  outline: solid rgba(245, 245, 245, 0.428) 2px;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 40px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 5px;
 }
 
@@ -173,12 +181,13 @@ body {
 .game-button {
   background-color: #d33a2f;
   border: none;
+  outline: solid rgba(245, 245, 245, 0.428) 2px;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 40px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 10px;
   margin: 5px;
   -webkit-animation: heartbeat 8s ease-in-out infinite both;
@@ -218,21 +227,38 @@ body {
   background-size: cover;
   background-image: url('/images/backOfCard.jpeg');
   border-radius: 10px;
+  -webkit-animation: roll-in-right 1s ease-out both;
+  animation: roll-in-right 1s ease-out both;
 }
 
 .hidden > * {
   margin-top: -50px;
 }
 
+@media (max-width: 1500px) {
+  .phase-header {
+    font-size: 6em;
+  }
+}
+
 @media (max-width: 900px) {
   .phase-header {
-    font-size: 7em;
+    font-size: 4em;
+  }
+}
+@media (max-width: 750px) {
+  #phase-two-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 30px;
   }
 }
 
 @media (max-width: 500px) {
   .phase-header {
-    font-size: 3em;
+    font-size: 2em;
   }
 }
 
@@ -250,6 +276,8 @@ body {
  * animation heartbeat
  * ----------------------------------------
  */
+
+/* buttons */
 @-webkit-keyframes heartbeat {
   from {
     -webkit-transform: scale(1);
@@ -316,5 +344,32 @@ body {
     transform: scale(1);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
+  }
+}
+
+/* cards */
+
+@-webkit-keyframes roll-in-right {
+  0% {
+    -webkit-transform: translateX(800px) rotate(540deg);
+    transform: translateX(800px) rotate(540deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0) rotate(0deg);
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+@keyframes roll-in-right {
+  0% {
+    -webkit-transform: translateX(800px) rotate(540deg);
+    transform: translateX(800px) rotate(540deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0) rotate(0deg);
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
   }
 }

@@ -396,8 +396,6 @@ let cards = [
   },
 ]
 
-console.log(phaseHeader)
-
 const initialize = () => {
   playerBank = 20
   dealerBank = 20
@@ -429,6 +427,7 @@ const initialize = () => {
   // add classLists
   betAmt.classList.add('bet-amount')
   betAmt.classList.add('form-control')
+  betMsg.classList.add('bet-msg')
   bet.classList.add('game-button')
   deal.classList.add('game-button')
   dealerCardOne.classList.add('cards')
@@ -462,8 +461,6 @@ const initialize = () => {
     window.location.reload()
   })
 
-  phaseHeader[1].style.fontSize = '7em'
-
   // function for when player or dealer run out of money
   const getWinner = () => {
     hide(betMsg)
@@ -476,7 +473,8 @@ const initialize = () => {
 
     setTimeout(() => {
       if (playerBank <= 0) {
-        phaseHeader[1].innerHTML = "You've run out of money. You lose."
+        phaseHeader[1].innerHTML = "You've run out of money"
+        phaseHeader[1].innerHTML = 'You lose'
         playerBankDiv.innerHTML = `Player Bank: $0.00`
         dealerBankDiv.innerHTML = `Dealer Bank: $40.00`
       } else if (dealerBank <= 0) {
@@ -560,7 +558,7 @@ const initialize = () => {
       } else if (betNum > playerBank) {
         betMsg.innerHTML = "Woah there! You don't have enough money!"
       } else {
-        betMsg.innerHTML = `Your bet is ${betNum}. Click Deal.`
+        betMsg.innerHTML = `Your bet is $${betNum}. Click Deal.`
         deal.style.visibility = 'visible'
       }
 
