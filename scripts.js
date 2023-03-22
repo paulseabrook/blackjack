@@ -654,6 +654,7 @@ const initialize = () => {
       dealerCardNum = isAceDeal(cardThree.amt, cardFour.amt)
       dealerCardOne.style.backgroundImage = `url(${cardThree.img})`
       dealerCardAmount.innerHTML = `Dealer: ${dealerCardNum}`
+      console.log(dealerCardOne)
       dealerCardOne.classList.remove('hidden')
       dealerCardOne.classList.add('cards')
 

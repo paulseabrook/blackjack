@@ -225,7 +225,7 @@ body {
   width: 18vh;
   text-align: center;
   background-size: cover;
-  background-image: url('/images/backOfCard.jpeg');
+  background-image: url('./images/backOfCard.jpeg');
   border-radius: 10px;
   -webkit-animation: roll-in-right 1s ease-out both;
   animation: roll-in-right 1s ease-out both;
